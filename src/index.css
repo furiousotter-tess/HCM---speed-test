@@ -1,0 +1,98 @@
+/* ── Score color tokens ───────────────────────────────────────────────────────
+   Naming: --{CssVarPrefix}-{shade}
+   Figma token path: Score/{Level}/100 | /500 | /900
+   ──────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Excellence  80-100% */
+  --Score-Excellence-100: #DCFCE7;
+  --Score-Excellence-500: #4ECDA8;
+  --Score-Excellence-900: #14532D;
+
+  /* Avancé  60-79% */
+  --Score-Avance-100: #DBEAFE;
+  --Score-Avance-500: #2563EB;
+  --Score-Avance-900: #1E3A8A;
+
+  /* Conforme  40-59% */
+  --Score-Conforme-100: #FEF3C7;
+  --Score-Conforme-500: #F59E0B;
+  --Score-Conforme-900: #78350F;
+
+  /* Essentiel  20-39% */
+  --Score-Essentiel-100: #FFEDD5;
+  --Score-Essentiel-500: #EA580C;
+  --Score-Essentiel-900: #7C2D12;
+
+  /* Non conforme  0-19% */
+  --Score-NonConforme-100: #FEE2E2;
+  --Score-NonConforme-500: #DC2626;
+  --Score-NonConforme-900: #7F1D1D;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #F9F9FF;
+  color: #1a1a2e;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input {
+  font-family: inherit;
+}
+
+::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #C9C7DE;
+  border-radius: 4px;
+}
+
+/* ── Dashboard animations ──────────────────────────────────────────────────── */
+
+/* Detail panel: content slides up + fades in when a KPI is selected/changed */
+@keyframes kpi-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Sub-row stagger: each child fades in slightly offset */
+@keyframes sub-row-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.kpi-detail-enter {
+  animation: kpi-appear 0.22s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.sub-row-enter {
+  animation: sub-row-in 0.18s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
