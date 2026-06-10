@@ -207,108 +207,156 @@ const KPIS_BY_TAB = [
         { name: 'Rooms', pct: 64, trend: '+2.4 pts vs last month', objective: 'Ensure each room type has a complete and engaging description for guests.', insight: 'Description length is below the required minimum for 3 room types. Aim for at least 150 characters per type.' },
       ] },
   ],
-  // Tab 1 — Media completion
+  // Tab 1 — Photo completion
   [
-    { name: 'Bar',           pct: 80, trend: '+3.0 pts vs last month', objective: 'Ensure the bar area has enough photos to attract guests interested in on-site drinks and dining.', insight: 'Carrousel is complete. Marcel and Tori Café & Bar are each missing 2 photos — add evening ambiance shots to reach 100%.',
+    { name: 'Hotel', pct: 76, trend: '+2.1 pts vs last month', objective: 'Ensure all hotel-level photo categories are fully covered.', insight: 'Sustainable development and Label sections are critically under-represented.',
       sub: [
-        { name: 'Carrousel',        pct: 100, trend: '+0.0 pts vs last month', objective: 'Verify the main bar carousel has the required 6 images.',               insight: 'All 6 required images are present. No action needed.' },
-        { name: 'Marcel',           pct: 67,  trend: '+2.1 pts vs last month', objective: 'Ensure Marcel has enough photos to highlight its cocktail offering.',    insight: '2 photos missing. An interior wide-shot and an evening ambiance shot are the priority.' },
-        { name: 'Tori café & Bar',  pct: 50,  trend: '-0.5 pts vs last month', objective: 'Ensure Tori Café & Bar is visually represented with at least 4 images.', insight: '2 of 4 required photos are missing. A bar counter close-up and a seating area shot are recommended.' },
+        { name: 'Hotel overview',           pct: 90, trend: '+1.5 pts vs last month', objective: 'Verify hotel overview photos cover exterior, lobby and key spaces.', insight: '1 photo missing — add a wide exterior shot for full coverage.' },
+        { name: 'Services',                 pct: 72, trend: '+2.0 pts vs last month', objective: 'Ensure all guest services are visually documented.',                 insight: '2 service photos missing. Prioritise concierge and room service shots.' },
+        { name: 'Hotel advantages',         pct: 80, trend: '+1.8 pts vs last month', objective: 'Ensure hotel advantage areas are illustrated with quality photos.',   insight: '1 photo missing in this section. A signature amenity shot is recommended.' },
+        { name: 'Sustainable development',  pct: 38, trend: '-0.5 pts vs last month', objective: 'Document sustainable initiatives visually to highlight eco-commitments.', insight: 'Most photos are missing. Add images of green initiatives, recycling points and energy-saving installations.' },
+        { name: 'Photos of your guest',     pct: 65, trend: '+3.0 pts vs last month', objective: 'Capture authentic guest experience moments to boost emotional engagement.', insight: '3 lifestyle photos missing. Focus on guests enjoying the pool, spa and dining areas.' },
+        { name: 'Label',                    pct: 42, trend: '+0.8 pts vs last month', objective: 'Ensure all certified labels are visually supported with compliant imagery.', insight: 'Several label visuals are missing. Add official imagery for each certification held by the property.' },
       ] },
-    { name: 'Bedroom',       pct: 65, trend: '+2.0 pts vs last month', objective: 'Verify that all room types have sufficient photo coverage for guest decision-making.', insight: 'Suite Junior is critically under-represented. Room Deluxe and Room Superior each need 1 additional photo.',
+    { name: 'Restaurant & Breakfast', pct: 74, trend: '+2.5 pts vs last month', objective: 'Ensure dining and breakfast areas are fully documented for guest decision-making.', insight: 'Chef and Anecdote sections are incomplete. Breakfast type visuals are missing.',
       sub: [
-        { name: 'Carrousel',     pct: 100, trend: '+0.0 pts vs last month', objective: 'Verify the main bedroom carousel meets the 6-image requirement.',                    insight: 'All 6 required images present. No action needed.' },
-        { name: 'Room Deluxe',   pct: 83,  trend: '+1.5 pts vs last month', objective: 'Ensure Room Deluxe has complete photo coverage of all key features.',               insight: '1 photo missing — a bathroom detail shot would complete this room type.' },
-        { name: 'Room Superior', pct: 67,  trend: '+2.5 pts vs last month', objective: 'Verify Room Superior has enough images to set accurate guest expectations.',         insight: '2 photos missing. A wide bedroom shot and a view-from-window photo are recommended.' },
-        { name: 'Suite Junior',  pct: 33,  trend: '-1.0 pts vs last month', objective: 'Ensure Suite Junior is fully documented with a minimum of 6 images.',               insight: '4 of 6 required photos are missing. Prioritise a full-suite layout shot, bathroom, and living area.' },
+        { name: 'Restaurant overview', pct: 85, trend: '+2.0 pts vs last month', objective: 'Verify the restaurant overview set covers ambiance, dining room and plated dishes.', insight: '1 photo missing — an interior wide-angle shot is recommended.' },
+        { name: 'Chef',                pct: 55, trend: '+1.2 pts vs last month', objective: 'Ensure the chef is visually featured to build trust and personality.',             insight: '2 photos missing. A portrait and an action shot in the kitchen are the priority.' },
+        { name: 'Anecdote',            pct: 48, trend: '-0.3 pts vs last month', objective: 'Illustrate the restaurant\'s story and signature elements visually.',              insight: 'Most anecdote visuals are missing. Add photos of signature dishes, décor details or origin story elements.' },
+        { name: 'Breakfast',           pct: 88, trend: '+3.1 pts vs last month', objective: 'Ensure breakfast visuals showcase variety, ambiance and quality.',                insight: '1 photo missing — a wide buffet setup shot would complete this section.' },
+        { name: 'Breakfast type',      pct: 60, trend: '+1.0 pts vs last month', objective: 'Document each breakfast type option with clear, appetising imagery.',             insight: '2 breakfast type photos are missing. Show continental and à la carte options clearly.' },
       ] },
-    { name: 'Breakfast',     pct: 95, trend: '+2.1 pts vs last month', objective: 'Verify that breakfast visuals convey the quality and variety of the morning offering.', insight: '1 photo missing from the Carrousel — a wide buffet setup shot would complete this category.',
+    { name: 'Bars', pct: 68, trend: '+1.8 pts vs last month', objective: 'Ensure bar areas are visually compelling and fully documented.', insight: 'Le Pondichery is missing several key shots.',
       sub: [
-        { name: 'Carrousel', pct: 95, trend: '+2.1 pts vs last month', objective: 'Ensure the breakfast carousel covers the buffet display, dining room and a detail shot.', insight: '1 image missing. A wide-angle shot of the full buffet layout is recommended.' },
+        { name: 'Le Pondichery', pct: 68, trend: '+1.8 pts vs last month', objective: 'Ensure Le Pondichery bar has a full set of photos covering counter, seating and signature cocktails.', insight: '3 photos missing. Add a bar counter close-up, a cocktail detail shot and an evening ambiance photo.' },
       ] },
-    { name: 'Fitness',       pct: 88, trend: '+1.5 pts vs last month', objective: 'Check that fitness facilities are fully and attractively photographed.', insight: '1 photo of the cardio area is blurred. Replace it with a sharp, well-lit shot for a perfect score.',
+    { name: 'Rooms & Accommodations', pct: 62, trend: '+1.5 pts vs last month', objective: 'Verify all room types are fully documented with quality photo coverage.', insight: 'Several room types are critically under-represented. Chambre standard accesssible is the weakest.',
       sub: [
-        { name: 'Carrousel', pct: 88, trend: '+1.5 pts vs last month', objective: 'Ensure the fitness carousel covers equipment, open floor space and natural light.', insight: '1 cardio area photo is blurred. A sharp replacement will bring this to 100%.' },
+        { name: 'Rooms overview',                                    pct: 88, trend: '+2.0 pts vs last month', objective: 'Ensure the rooms overview carousel covers all key room categories.', insight: '1 photo missing — a wide room layout shot is recommended.' },
+        { name: 'Chambre Classique - 2 lits simples',                pct: 75, trend: '+1.5 pts vs last month', objective: 'Verify this room type has photos covering bed, bathroom and view.',  insight: '1 photo missing — a bathroom detail shot would complete coverage.' },
+        { name: 'Junior Suite Privilège - 1 canapé-lit 2 personnes', pct: 50, trend: '-0.5 pts vs last month', objective: 'Ensure the Junior Suite is fully documented for premium guests.',    insight: '3 photos missing. Prioritise the living area, sofa-bed setup and a bathroom wide shot.' },
+        { name: 'Chambre Privilège - 1 lit double',                  pct: 67, trend: '+2.0 pts vs last month', objective: 'Verify Chambre Privilège photos cover all guest touchpoints.',       insight: '2 photos missing — add a window view and a bathroom close-up.' },
+        { name: 'Chambre Privilège, terrasse - 1 lit double',        pct: 72, trend: '+1.8 pts vs last month', objective: 'Ensure the terrace is visually featured as a key selling point.',    insight: '1 photo missing — a terrace lifestyle shot with outdoor furniture is recommended.' },
+        { name: 'Chambre privilège vue Tour Eiffel',                  pct: 80, trend: '+3.0 pts vs last month', objective: 'Make the Eiffel Tower view the hero of this room\'s photo set.',   insight: '1 photo missing — a daytime and a night view shot of the Eiffel Tower are both recommended.' },
+        { name: 'Chambre standard accessible avec 1 lit double',     pct: 42, trend: '-1.0 pts vs last month', objective: 'Ensure accessibility features are clearly documented visually.',     insight: '4 photos missing. Document wheelchair access, adapted bathroom and room layout in detail.' },
+        { name: 'Chambre standard avec 1 lit double',                pct: 70, trend: '+1.2 pts vs last month', objective: 'Verify the standard room has a complete and attractive photo set.',  insight: '2 photos missing — add a bedroom overview and a bathroom shot.' },
+        { name: 'Suite',                                             pct: 55, trend: '+0.8 pts vs last month', objective: 'Ensure the suite is fully documented for high-value guests.',        insight: '3 photos missing. Prioritise the living area, bathroom and a signature view shot.' },
       ] },
-    { name: 'Hotel',         pct: 88, trend: '+4.2 pts vs last month', objective: 'Assess whether hotel exterior, lobby and common area photos are complete.', insight: 'Rooftop terrace photos are incomplete — 2 more images are needed to fulfil the requirement.',
+    { name: 'Wellness', pct: 58, trend: '+1.2 pts vs last month', objective: 'Document all wellness facilities to attract health-conscious guests.', insight: 'Thalasso is critically incomplete. Institut needs additional coverage.',
       sub: [
-        { name: 'Carrousel', pct: 88, trend: '+4.2 pts vs last month', objective: 'Ensure the hotel carousel has images covering the exterior, lobby, pool and signature spaces.', insight: '2 rooftop terrace photos are missing. Add a day and a dusk shot to complete the set.' },
+        { name: 'Spa',      pct: 78, trend: '+2.5 pts vs last month', objective: 'Ensure the spa section has photos covering treatment rooms, pool and relaxation areas.', insight: '1 photo missing — add a treatment room detail shot.' },
+        { name: 'Thalasso', pct: 35, trend: '-1.2 pts vs last month', objective: 'Visually document the thalasso facilities to highlight their unique offerings.',         insight: '4 photos missing. This is a key differentiator — prioritise a full photo set urgently.' },
+        { name: 'Institut', pct: 62, trend: '+0.5 pts vs last month', objective: 'Ensure the beauty institute is attractively and completely documented.',                  insight: '2 photos missing. Add a reception area shot and a treatment close-up.' },
       ] },
-    { name: 'Meeting Room',  pct: 62, trend: '+1.8 pts vs last month', objective: 'Check that all meeting rooms and conference spaces are documented with at least 4 images each.', insight: 'Ron Mulock AO 2 and John Farragher Boardroom are critically incomplete. Carrousel and Woodrow Room are at full coverage.',
+    { name: 'Pool', pct: 82, trend: '+2.8 pts vs last month', objective: 'Ensure pool areas are visually appealing and fully covered.', insight: '1 photo missing from the pool overview set.',
       sub: [
-        { name: 'Carrousel',                  pct: 100, trend: '+0.0 pts vs last month', objective: 'Verify the main meeting room carousel is complete.',                              insight: 'All required images present. No action needed.' },
-        { name: 'Hunter Room',                pct: 75,  trend: '+2.0 pts vs last month', objective: 'Ensure Hunter Room has a full photo set covering setup options.',                  insight: '1 photo missing — a boardroom-style setup shot is recommended.' },
-        { name: 'Jamison Room',               pct: 75,  trend: '+1.5 pts vs last month', objective: 'Verify Jamison Room has at least 4 photos including layout variations.',           insight: '1 photo missing. A classroom-layout shot would complete the set.' },
-        { name: 'John Farragher Boardroom',   pct: 50,  trend: '-0.8 pts vs last month', objective: 'Ensure the boardroom has photos covering the table, AV equipment and natural light.',insight: '2 photos missing. A wide boardroom shot and a detail of the AV setup are priorities.' },
-        { name: 'Ron Mulock AO 2',            pct: 25,  trend: '-2.2 pts vs last month', objective: 'Verify this room has a minimum photo set to support bookings.',                    insight: '3 of 4 required photos are missing. Urgent: add a full-room, a detail and a natural-light shot.' },
-        { name: 'Woodrow Room',               pct: 100, trend: '+3.0 pts vs last month', objective: 'Confirm the Woodrow Room photo coverage is complete.',                             insight: 'All required images present. No action needed.' },
-        { name: 'WSCC 3A',                    pct: 50,  trend: '+0.5 pts vs last month', objective: 'Ensure WSCC 3A has adequate coverage to support event bookings.',                  insight: '2 photos missing. A full-room overview and a detail of the partition wall are recommended.' },
-        { name: 'WSCC 3B',                    pct: 50,  trend: '+0.5 pts vs last month', objective: 'Ensure WSCC 3B has adequate coverage to support event bookings.',                  insight: '2 photos missing — mirror the photo set used for WSCC 3A.' },
+        { name: 'Pool overview', pct: 82, trend: '+2.8 pts vs last month', objective: 'Verify the pool overview covers the full area, sunbeds and water features.', insight: '1 photo missing — a wide aerial or elevated shot of the pool area is recommended.' },
       ] },
-    { name: 'Restaurant',    pct: 82, trend: '+2.8 pts vs last month', objective: 'Ensure the restaurant and its outlets are visually documented for guest appetite appeal.', insight: 'Carrousel is complete. Marcel is missing 2 photos — plated dish and interior ambiance shots are recommended.',
+    { name: 'Leisure', pct: 63, trend: '+1.5 pts vs last month', objective: 'Ensure all leisure facilities are documented to boost guest engagement.', insight: 'Famille and Golf sections are the weakest areas.',
       sub: [
-        { name: 'Carrousel', pct: 100, trend: '+0.0 pts vs last month', objective: 'Verify the main restaurant carousel meets the 6-image requirement.',                    insight: 'All 6 required images present. No action needed.' },
-        { name: 'Marcel',    pct: 64,  trend: '+3.5 pts vs last month', objective: 'Ensure Marcel restaurant has photos covering ambiance, plated dishes and bar counter.', insight: '2 photos missing. A hero dish plating shot and a dining-room ambiance photo are top priorities.' },
+        { name: 'Fitness overview', pct: 85, trend: '+2.0 pts vs last month', objective: 'Verify the fitness overview covers all key equipment and open-floor space.', insight: '1 photo missing — a natural light action shot is recommended.' },
+        { name: 'Salle fitness',    pct: 72, trend: '+1.5 pts vs last month', objective: 'Ensure the fitness room is fully documented with equipment detail shots.',   insight: '2 photos missing — add a cardio zone and a weights area shot.' },
+        { name: 'Famille',          pct: 48, trend: '-0.8 pts vs last month', objective: 'Visually highlight family-friendly facilities and activities.',               insight: '3 photos missing. Add photos of kids\' club, family pool area and activity spaces.' },
+        { name: 'Golf',             pct: 45, trend: '+0.5 pts vs last month', objective: 'Document the golf facilities to attract sports-oriented guests.',             insight: '3 photos missing. Prioritise a course overview, putting green and clubhouse shot.' },
       ] },
-    { name: 'Service',       pct: 90, trend: '+1.2 pts vs last month', objective: 'Ensure service and amenity areas are visually represented.', insight: 'Almost complete — 1 image is missing from the Carrousel. A signature service moment shot is recommended.',
+    { name: 'Surrounding', pct: 52, trend: '+0.8 pts vs last month', objective: 'Ensure the hotel\'s surroundings and nearby attractions are well documented.', insight: 'CDG, DisneyLand Paris and Paris Orly sections are critically incomplete.',
       sub: [
-        { name: 'Carrousel', pct: 90, trend: '+1.2 pts vs last month', objective: 'Verify the service carousel covers key guest-facing service moments.', insight: '1 image missing. A concierge or in-room service action shot would complete this category.' },
+        { name: 'Destination',                   pct: 70, trend: '+2.0 pts vs last month', objective: 'Illustrate the destination with iconic and aspirational imagery.',       insight: '2 photos missing — add a city skyline and a local culture shot.' },
+        { name: 'Around the hotel - Beaugrenelle', pct: 65, trend: '+1.5 pts vs last month', objective: 'Show proximity to Beaugrenelle shopping centre.',                     insight: '1 photo missing — an exterior shot of the centre entrance is recommended.' },
+        { name: 'Around the hotel - Paris',       pct: 68, trend: '+1.2 pts vs last month', objective: 'Highlight Paris\'s key landmarks accessible from the hotel.',          insight: '2 photos missing — add Eiffel Tower and Seine riverside shots.' },
+        { name: 'Around the hotel - Galeries Lafayette', pct: 60, trend: '+0.8 pts vs last month', objective: 'Document proximity to Galeries Lafayette.',                    insight: '2 photos missing — add an exterior and an interior shot.' },
+        { name: 'Around the hotel - Dupleix',     pct: 55, trend: '+0.5 pts vs last month', objective: 'Show the Dupleix neighbourhood and metro access.',                    insight: '2 photos missing — a street-level and metro entrance shot are recommended.' },
+        { name: 'Around the hotel - CDG',         pct: 30, trend: '-0.5 pts vs last month', objective: 'Document CDG airport access for business and transit guests.',         insight: '3 photos missing. Add a transfer route, terminal and signage shot.' },
+        { name: 'Around the hotel - DisneyLand Paris', pct: 28, trend: '-0.8 pts vs last month', objective: 'Highlight DisneyLand Paris as a family-friendly nearby attraction.', insight: '3 photos missing. This is high-value for family guests — add park entrance and transport shots.' },
+        { name: 'Around the hotel - Paris Orly',  pct: 32, trend: '-0.3 pts vs last month', objective: 'Document Orly airport access for arriving guests.',                   insight: '3 photos missing. Add shuttle, terminal and wayfinding shots.' },
       ] },
-    { name: 'Suite',         pct: 55, trend: '+0.8 pts vs last month', objective: 'Verify that suite accommodations are fully documented for premium guests.', insight: '3 of 6 required Carrousel images are missing. Bathroom, living area and view shots are the priority.',
+    { name: 'Meetings & Events', pct: 70, trend: '+2.2 pts vs last month', objective: 'Ensure all meeting and event spaces are professionally documented.', insight: 'Affaires and Mariages sections need additional coverage.',
       sub: [
-        { name: 'Carrousel', pct: 55, trend: '+0.8 pts vs last month', objective: 'Ensure the suite carousel covers all key areas: bedroom, bathroom, living space and view.', insight: '3 photos missing. Prioritise bathroom, separate living area and a signature view shot.' },
+        { name: 'Overview',  pct: 88, trend: '+2.0 pts vs last month', objective: 'Verify the meetings overview showcases the full range of event spaces.',          insight: '1 photo missing — a wide setup shot covering multiple rooms is recommended.' },
+        { name: 'Dupleix',   pct: 75, trend: '+1.5 pts vs last month', objective: 'Ensure Dupleix room is documented for corporate and social events.',               insight: '1 photo missing — a classroom or theatre-style setup shot is recommended.' },
+        { name: 'Eiffel',    pct: 80, trend: '+3.0 pts vs last month', objective: 'Highlight the Eiffel room with its view as a premium event selling point.',        insight: '1 photo missing — a reception-style setup shot with the view in background.' },
+        { name: 'Affaires',  pct: 58, trend: '+0.5 pts vs last month', objective: 'Document the Affaires space for business meetings and corporate events.',          insight: '2 photos missing — add a boardroom and a detail shot of AV equipment.' },
+        { name: 'Mariages',  pct: 62, trend: '+1.0 pts vs last month', objective: 'Showcase the hotel\'s wedding and celebration event capabilities visually.',       insight: '2 photos missing. Add a banquet setup and a decorated ceremony space shot.' },
+      ] },
+    { name: 'Parking', pct: 88, trend: '+1.0 pts vs last month', objective: 'Ensure parking facilities are clearly documented for guest convenience.', insight: '1 photo missing from the parking overview.',
+      sub: [
+        { name: 'Overview', pct: 88, trend: '+1.0 pts vs last month', objective: 'Verify the parking overview covers entrance, spaces and signage.', insight: '1 photo missing — add an entrance or wayfinding shot.' },
       ] },
   ],
   // Tab 2 — Photo quality
   [
-    { name: 'Bar',           pct: 88, trend: '+2.5 pts vs last month', objective: 'Assess the visual quality and brand alignment of all bar photography.', insight: 'Carrousel and Marcel are strong. Tori Café & Bar has 2 underexposed images that need reshooting.',
+    { name: 'Hotel', pct: 72, trend: '+1.8 pts vs last month', objective: 'Assess the visual quality and brand compliance of all hotel-level photography.', insight: 'Sustainable development and Label visuals are below quality threshold.',
       sub: [
-        { name: 'Carrousel',        pct: 95, trend: '+3.0 pts vs last month', objective: 'Verify that carousel images are sharp, well-lit and brand-compliant.',             insight: 'All images meet resolution and brand standards. No action needed.' },
-        { name: 'Marcel',           pct: 88, trend: '+2.0 pts vs last month', objective: 'Ensure Marcel photos are professionally styled and brand-aligned.',                 insight: '1 cocktail close-up is slightly overexposed — a minor correction will bring this to 95%+.' },
-        { name: 'Tori café & Bar',  pct: 62, trend: '-0.5 pts vs last month', objective: 'Check that Tori Café & Bar images meet resolution and brand framing standards.',    insight: '2 images are underexposed. Reshoot during peak hours with better ambient lighting.' },
+        { name: 'Hotel overview',           pct: 88, trend: '+2.0 pts vs last month', objective: 'Verify hotel overview photos meet brand resolution and framing standards.',   insight: '1 image has a slight overexposure issue — a quick correction is recommended.' },
+        { name: 'Services',                 pct: 70, trend: '+1.5 pts vs last month', objective: 'Ensure service photos are sharp, well-lit and brand-compliant.',              insight: '2 images are below resolution threshold. Reshoot under controlled lighting.' },
+        { name: 'Hotel advantages',         pct: 78, trend: '+2.2 pts vs last month', objective: 'Check that hotel advantage photos reflect premium brand positioning.',         insight: '1 image has a composition issue — reframe to better showcase the advantage.' },
+        { name: 'Sustainable development',  pct: 40, trend: '-0.5 pts vs last month', objective: 'Ensure eco-initiative photos are clear, authentic and brand-aligned.',         insight: 'Most existing images are poorly lit. A dedicated reshoot with natural light is strongly recommended.' },
+        { name: 'Photos of your guest',     pct: 62, trend: '+2.5 pts vs last month', objective: 'Verify guest lifestyle photos are authentic, diverse and brand-compliant.',   insight: '2 images look staged. Replace with more natural, spontaneous lifestyle shots.' },
+        { name: 'Label',                    pct: 45, trend: '+0.8 pts vs last month', objective: 'Ensure label visuals meet certification display standards.',                   insight: 'Several label images are low-resolution. Source official high-res assets from the certifying bodies.' },
       ] },
-    { name: 'Bedroom',       pct: 65, trend: '+1.2 pts vs last month', objective: 'Evaluate bedroom imagery for resolution, composition and brand compliance.', insight: 'Suite Junior photography is below brand standards. Room Superior needs minor colour correction.',
+    { name: 'Restaurant & Breakfast', pct: 70, trend: '+2.0 pts vs last month', objective: 'Evaluate dining photography for brand alignment, food styling and lighting quality.', insight: 'Chef portraits and Anecdote visuals are below brand standards.',
       sub: [
-        { name: 'Carrousel',     pct: 90, trend: '+2.0 pts vs last month', objective: 'Verify main carousel images are sharp, well-composed and brand-compliant.',             insight: 'Strong set overall. 1 image has a slight white-balance issue — a quick correction is recommended.' },
-        { name: 'Room Deluxe',   pct: 78, trend: '+1.5 pts vs last month', objective: 'Ensure Room Deluxe photos reflect brand identity and premium positioning.',             insight: '1 image is not brand-compliant. Consult brand guidelines for framing and lighting standards.' },
-        { name: 'Room Superior', pct: 60, trend: '+0.8 pts vs last month', objective: 'Verify Room Superior imagery meets minimum resolution and composition standards.',       insight: '2 images require colour correction. The window shot is overexposed — reshoot with exposure control.' },
-        { name: 'Suite Junior',  pct: 30, trend: '-1.8 pts vs last month', objective: 'Ensure Suite Junior photography is professionally styled and brand-aligned.',           insight: 'Most photos are below quality threshold. A dedicated professional reshoot is strongly recommended.' },
+        { name: 'Restaurant overview', pct: 82, trend: '+2.5 pts vs last month', objective: 'Verify restaurant overview images are well-composed and brand-compliant.',    insight: '1 image is slightly underexposed — a brightness correction will improve quality.' },
+        { name: 'Chef',                pct: 55, trend: '+1.0 pts vs last month', objective: 'Ensure chef photos are professionally styled and reflect brand identity.',    insight: '1 portrait has a distracting background. Reshoot with a clean kitchen backdrop.' },
+        { name: 'Anecdote',            pct: 48, trend: '-0.3 pts vs last month', objective: 'Check that anecdote visuals are storytelling-focused and on-brand.',           insight: 'Images lack narrative depth. Work with a food stylist to create more compelling shots.' },
+        { name: 'Breakfast',           pct: 85, trend: '+3.0 pts vs last month', objective: 'Ensure breakfast photos are bright, welcoming and appetising.',               insight: '1 image taken in low light — retake during morning service for better brightness.' },
+        { name: 'Breakfast type',      pct: 60, trend: '+1.0 pts vs last month', objective: 'Verify each breakfast type is photographed with consistent styling.',         insight: '2 images have inconsistent colour grading. Apply uniform post-processing for brand coherence.' },
       ] },
-    { name: 'Breakfast',     pct: 76, trend: '+1.8 pts vs last month', objective: 'Evaluate whether breakfast photos meet brand identity and lighting standards.', insight: '2 images from the Carrousel are flagged as low-light. Retaking in natural morning light will improve quality.',
+    { name: 'Bars', pct: 65, trend: '+1.5 pts vs last month', objective: 'Assess bar photography for brand alignment, lighting quality and visual appeal.', insight: 'Le Pondichery has several images below quality threshold.',
       sub: [
-        { name: 'Carrousel', pct: 76, trend: '+1.8 pts vs last month', objective: 'Ensure the breakfast carousel is bright, welcoming and aligned with brand standards.', insight: '2 low-light images identified. Retaking during morning service in natural light will push quality above 90%.' },
+        { name: 'Le Pondichery', pct: 65, trend: '+1.5 pts vs last month', objective: 'Ensure Le Pondichery photos are sharp, well-lit and brand-aligned.', insight: '2 images are underexposed. Reshoot during evening service with ambient lighting reinforced by professional equipment.' },
       ] },
-    { name: 'Fitness',       pct: 82, trend: '+2.0 pts vs last month', objective: 'Check that fitness area photos meet resolution and brand framing standards.', insight: '1 image of the locker room is too dark — a brighter, cleaner replacement is recommended.',
+    { name: 'Rooms & Accommodations', pct: 60, trend: '+1.2 pts vs last month', objective: 'Evaluate room photography for resolution, composition and brand compliance.', insight: 'Chambre standard accessible and Junior Suite Privilège are the weakest quality areas.',
       sub: [
-        { name: 'Carrousel', pct: 82, trend: '+2.0 pts vs last month', objective: 'Ensure fitness carousel images are sharp, well-lit and match the brand active lifestyle identity.', insight: '1 locker room photo is too dark. A brighter replacement will push quality above 90%.' },
+        { name: 'Rooms overview',                                    pct: 85, trend: '+2.0 pts vs last month', objective: 'Verify rooms overview images meet brand resolution and composition standards.', insight: '1 image has a white-balance issue — a quick correction is recommended.' },
+        { name: 'Chambre Classique - 2 lits simples',                pct: 72, trend: '+1.5 pts vs last month', objective: 'Ensure Chambre Classique photos reflect a clean, welcoming aesthetic.',        insight: '1 image is slightly overexposed — reprocess with reduced highlights.' },
+        { name: 'Junior Suite Privilège - 1 canapé-lit 2 personnes', pct: 45, trend: '-0.8 pts vs last month', objective: 'Verify Junior Suite photography meets premium brand positioning standards.',    insight: 'Most photos are below quality threshold. A professional reshoot with a stylist is strongly recommended.' },
+        { name: 'Chambre Privilège - 1 lit double',                  pct: 65, trend: '+1.8 pts vs last month', objective: 'Ensure Chambre Privilège photos convey comfort and premium quality.',          insight: '2 images have composition issues — reframe to better showcase room proportions.' },
+        { name: 'Chambre Privilège, terrasse - 1 lit double',        pct: 70, trend: '+2.0 pts vs last month', objective: 'Verify the terrace shots are bright and visually aspirational.',               insight: '1 terrace photo is taken in poor light. Reshoot during golden hour for best results.' },
+        { name: 'Chambre privilège vue Tour Eiffel',                  pct: 78, trend: '+2.8 pts vs last month', objective: 'Ensure the Eiffel Tower view is the visual hero of this room\'s set.',        insight: '1 night view photo has excessive noise. Reshoot with a tripod and longer exposure.' },
+        { name: 'Chambre standard accessible avec 1 lit double',     pct: 38, trend: '-1.5 pts vs last month', objective: 'Ensure accessibility documentation photos meet clarity and precision standards.', insight: 'Most images are poorly framed. A reshoot focused on accessibility details is urgently needed.' },
+        { name: 'Chambre standard avec 1 lit double',                pct: 68, trend: '+1.0 pts vs last month', objective: 'Verify standard room photos are clean, bright and brand-compliant.',           insight: '2 images need colour correction — apply consistent warm grading.' },
+        { name: 'Suite',                                             pct: 55, trend: '+0.5 pts vs last month', objective: 'Ensure suite photography reflects premium positioning at the required resolution.', insight: '2 images are below 3700px resolution. A full professional reshoot is recommended.' },
       ] },
-    { name: 'Hotel',         pct: 70, trend: '+0.9 pts vs last month', objective: 'Check overall hotel photography quality against brand positioning standards.', insight: 'Lobby photos are strong, but exterior night shots are underexposed. Consider a professional reshoot.',
+    { name: 'Wellness', pct: 55, trend: '+1.0 pts vs last month', objective: 'Check wellness facility photos for brand alignment, lighting quality and aspirational feel.', insight: 'Thalasso imagery is critically below standard.',
       sub: [
-        { name: 'Carrousel', pct: 70, trend: '+0.9 pts vs last month', objective: 'Verify that hotel carousel images cover key spaces at the right quality level.', insight: 'Exterior night shots are underexposed. A professional reshoot with proper lighting will significantly improve the score.' },
+        { name: 'Spa',      pct: 75, trend: '+2.0 pts vs last month', objective: 'Verify spa photos are serene, well-lit and brand-compliant.',                insight: '1 image has a distracting element in frame — restage and reshoot.' },
+        { name: 'Thalasso', pct: 32, trend: '-1.5 pts vs last month', objective: 'Ensure thalasso visuals convey the therapeutic and premium nature of the facility.', insight: 'All existing images are below quality threshold. A dedicated professional reshoot is urgently needed.' },
+        { name: 'Institut', pct: 60, trend: '+0.8 pts vs last month', objective: 'Verify beauty institute photos are clean, bright and professionally styled.',   insight: '2 images are underexposed. Reshoot with a combination of natural and soft artificial lighting.' },
       ] },
-    { name: 'Meeting Room',  pct: 72, trend: '+2.2 pts vs last month', objective: 'Verify that all meeting room photos convey a professional and welcoming environment.', insight: 'Ron Mulock AO 2 and WSCC rooms have quality issues. Carrousel, Woodrow Room and Hunter Room are strong.',
+    { name: 'Pool', pct: 80, trend: '+2.5 pts vs last month', objective: 'Assess pool photography for clarity, composition and brand alignment.', insight: '1 pool image is slightly overexposed — a minor correction will bring quality above 90%.',
       sub: [
-        { name: 'Carrousel',                  pct: 95, trend: '+1.0 pts vs last month', objective: 'Ensure main carousel images are professionally shot and brand-compliant.',           insight: 'Excellent quality. No action needed.' },
-        { name: 'Hunter Room',                pct: 82, trend: '+2.5 pts vs last month', objective: 'Check Hunter Room photos for sharpness, lighting and brand alignment.',              insight: '1 image is slightly dark. A brighter replacement will bring this room to 90%+.' },
-        { name: 'Jamison Room',               pct: 78, trend: '+1.8 pts vs last month', objective: 'Verify Jamison Room photos meet resolution and staging standards.',                  insight: '1 wide shot shows an unmade table. Restage and reshoot for brand compliance.' },
-        { name: 'John Farragher Boardroom',   pct: 68, trend: '-0.5 pts vs last month', objective: 'Ensure the boardroom is photographed at a quality level that reflects its premium status.', insight: '2 photos have insufficient resolution. Reshoot with a minimum 3700px target.' },
-        { name: 'Ron Mulock AO 2',            pct: 48, trend: '-1.5 pts vs last month', objective: 'Verify Ron Mulock AO 2 photos are sharp, well-lit and brand-compliant.',             insight: 'Most images are below threshold. A professional reshoot covering full-room, detail and AV setup is recommended.' },
-        { name: 'Woodrow Room',               pct: 88, trend: '+3.2 pts vs last month', objective: 'Confirm Woodrow Room image quality meets brand standards.',                          insight: 'Strong set. 1 image has a slight exposure issue — a quick colour correction is all that is needed.' },
-        { name: 'WSCC 3A',                    pct: 65, trend: '+0.8 pts vs last month', objective: 'Check WSCC 3A photos for lighting quality and professional presentation.',           insight: '2 images are overexposed. Reshoot with controlled lighting to reach brand-compliance.' },
-        { name: 'WSCC 3B',                    pct: 65, trend: '+0.8 pts vs last month', objective: 'Check WSCC 3B photos for lighting quality and professional presentation.',           insight: '2 images are overexposed — same issue as WSCC 3A. A joint reshoot session is recommended.' },
+        { name: 'Pool overview', pct: 80, trend: '+2.5 pts vs last month', objective: 'Ensure pool overview photos showcase the area at its best.', insight: '1 image is overexposed at midday. Reshoot during early morning or late afternoon for softer light.' },
       ] },
-    { name: 'Restaurant',    pct: 80, trend: '+3.0 pts vs last month', objective: 'Assess restaurant photography for brand alignment, food styling and ambiance.', insight: 'Carrousel is strong. Marcel has 1 dish photo that is overlit — a quick correction will improve the score.',
+    { name: 'Leisure', pct: 60, trend: '+1.2 pts vs last month', objective: 'Evaluate leisure facility photos for quality, brand alignment and visual appeal.', insight: 'Famille and Golf photos are below brand quality standards.',
       sub: [
-        { name: 'Carrousel', pct: 92, trend: '+2.0 pts vs last month', objective: 'Verify the main restaurant carousel meets quality and brand standards.',           insight: 'Excellent quality. No action needed.' },
-        { name: 'Marcel',    pct: 68, trend: '+4.0 pts vs last month', objective: 'Ensure Marcel food and ambiance photography is brand-aligned and professionally styled.', insight: '1 hero dish photo is overlit and lacks depth. A professional food stylist reshoot is recommended.' },
+        { name: 'Fitness overview', pct: 82, trend: '+2.0 pts vs last month', objective: 'Verify fitness overview images are sharp, well-lit and active in feel.',  insight: '1 image is too dark — replace with a well-lit alternative.' },
+        { name: 'Salle fitness',    pct: 70, trend: '+1.5 pts vs last month', objective: 'Ensure fitness room photos convey energy and cleanliness.',                 insight: '2 images have cluttered backgrounds — restage before reshoot.' },
+        { name: 'Famille',          pct: 45, trend: '-0.8 pts vs last month', objective: 'Verify family facility photos are vibrant, joyful and brand-compliant.',    insight: '3 images are poorly lit and lack energy. A dedicated family-focused reshoot is recommended.' },
+        { name: 'Golf',             pct: 42, trend: '+0.5 pts vs last month', objective: 'Ensure golf course photos are landscape-quality and aspirational.',          insight: '3 images taken in overcast conditions — reshoot on a clear day for vibrant, aspirational results.' },
       ] },
-    { name: 'Service',       pct: 85, trend: '+1.5 pts vs last month', objective: 'Verify that service area images are sharp, welcoming and brand-aligned.', insight: '1 image in the Carrousel shows a staff member out of uniform — replace with a brand-compliant alternative.',
+    { name: 'Surrounding', pct: 50, trend: '+0.5 pts vs last month', objective: 'Evaluate neighbourhood and destination photos for quality and relevance.', insight: 'CDG, DisneyLand Paris and Paris Orly sections are critically below quality standards.',
       sub: [
-        { name: 'Carrousel', pct: 85, trend: '+1.5 pts vs last month', objective: 'Ensure service carousel photos convey a high-end, welcoming experience.', insight: '1 image shows a staff member out of uniform. Replace to ensure brand compliance.' },
+        { name: 'Destination',                        pct: 68, trend: '+1.8 pts vs last month', objective: 'Ensure destination photos are iconic, sharp and aspirational.',           insight: '2 images are too generic — replace with more distinctive and location-specific shots.' },
+        { name: 'Around the hotel - Beaugrenelle',    pct: 62, trend: '+1.2 pts vs last month', objective: 'Verify Beaugrenelle photos are clear and visually engaging.',             insight: '1 image has motion blur — reshoot with a faster shutter speed.' },
+        { name: 'Around the hotel - Paris',           pct: 65, trend: '+1.0 pts vs last month', objective: 'Ensure Paris landmark photos are high-resolution and well-composed.',    insight: '2 images are underexposed — reshoot during golden hour or use post-processing correction.' },
+        { name: 'Around the hotel - Galeries Lafayette', pct: 58, trend: '+0.8 pts vs last month', objective: 'Verify Galeries Lafayette photos convey the shopping experience.',  insight: '2 images are cropped awkwardly — reframe to show the iconic dome or store entrance.' },
+        { name: 'Around the hotel - Dupleix',         pct: 52, trend: '+0.5 pts vs last month', objective: 'Ensure Dupleix neighbourhood photos are vibrant and welcoming.',         insight: '2 images are poorly composed — apply the rule of thirds for better visual balance.' },
+        { name: 'Around the hotel - CDG',             pct: 28, trend: '-0.5 pts vs last month', objective: 'Verify CDG airport photos meet minimum quality for guest wayfinding.',   insight: 'Images are low-resolution and taken with insufficient lighting. A reshoot with professional equipment is needed.' },
+        { name: 'Around the hotel - DisneyLand Paris', pct: 25, trend: '-1.0 pts vs last month', objective: 'Ensure DisneyLand Paris photos are vibrant and family-friendly.',     insight: 'All images are below quality threshold. Source high-resolution editorial or partnership imagery.' },
+        { name: 'Around the hotel - Paris Orly',      pct: 30, trend: '-0.3 pts vs last month', objective: 'Verify Paris Orly photos meet brand standards for transport documentation.', insight: 'Images are blurry and underexposed. A reshoot with proper lighting is required.' },
       ] },
-    { name: 'Suite',         pct: 62, trend: '+1.0 pts vs last month', objective: 'Evaluate suite photography for premium positioning, resolution and brand compliance.', insight: '2 Carrousel images are below the 3700px minimum resolution. A professional reshoot is recommended.',
+    { name: 'Meetings & Events', pct: 68, trend: '+2.0 pts vs last month', objective: 'Assess event space photography for professional quality and brand alignment.', insight: 'Affaires and Mariages sections need quality improvement.',
       sub: [
-        { name: 'Carrousel', pct: 62, trend: '+1.0 pts vs last month', objective: 'Ensure suite carousel images convey the premium experience at the required resolution.', insight: '2 images are below the 3700px minimum. Reshoot the bathroom and view angles at full resolution.' },
+        { name: 'Overview',  pct: 85, trend: '+2.0 pts vs last month', objective: 'Verify meetings overview images are sharp, professional and brand-compliant.',      insight: '1 image has an overexposed window — use HDR or curtains during reshoot.' },
+        { name: 'Dupleix',   pct: 72, trend: '+1.5 pts vs last month', objective: 'Ensure Dupleix room photos convey a professional and welcoming atmosphere.',        insight: '1 image shows empty chairs in disarray — restage before reshoot.' },
+        { name: 'Eiffel',    pct: 78, trend: '+2.5 pts vs last month', objective: 'Highlight the Eiffel room\'s view with crisp, high-resolution photography.',        insight: '1 window shot has lens flare — reshoot with appropriate lens filter.' },
+        { name: 'Affaires',  pct: 52, trend: '+0.5 pts vs last month', objective: 'Ensure Affaires room photos reflect corporate professionalism and precision.',       insight: '2 images are poorly lit. Reshoot with controlled lighting to convey a premium business environment.' },
+        { name: 'Mariages',  pct: 58, trend: '+1.0 pts vs last month', objective: 'Verify wedding space photos are romantic, elegant and aspirational.',               insight: '2 images lack decorative styling. Work with a wedding stylist for a dedicated reshoot.' },
+      ] },
+    { name: 'Parking', pct: 85, trend: '+1.0 pts vs last month', objective: 'Ensure parking photos are clear, well-lit and informative.', insight: '1 image has poor lighting — a brighter replacement will bring quality above 90%.',
+      sub: [
+        { name: 'Overview', pct: 85, trend: '+1.0 pts vs last month', objective: 'Verify parking overview photos are clear, bright and help guests navigate easily.', insight: '1 image taken in low light — reshoot during daytime for maximum clarity.' },
       ] },
   ],
 ]
@@ -819,7 +867,7 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
                         <polyline points="6 9 12 15 18 9"/>
                       </svg>
 
-                      <span style={{ fontSize: 14, color: isSelected ? '#2D4CD5' : '#374151', fontWeight: isSelected ? 600 : 400, ...(activeTab === 0 ? { width: 170, flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' } : { minWidth: 130 }) }}>
+                      <span style={{ fontSize: 14, color: isSelected ? '#2D4CD5' : '#374151', fontWeight: isSelected ? 600 : 400, width: 170, flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                         {kpi.name}
                       </span>
 
@@ -827,7 +875,7 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
                         ? <span style={{ fontSize: 13, color: '#9CA3AF', flex: 1 }}>Empty</span>
                         : activeTab === 2
                           ? <Stars value={kpi.pct / 20} size={16} />
-                          : <ScoreGauge pct={kpi.pct} width={activeTab === 0 ? 120 : undefined} />
+                          : <ScoreGauge pct={kpi.pct} width={activeTab !== 2 ? 120 : undefined} />
                       }
 
                       <span style={{ fontSize: 14, fontWeight: 600, color: isSelected ? '#2D4CD5' : '#374151', minWidth: 40, textAlign: 'right' }}>
@@ -882,8 +930,8 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
                                   <svg width="10" height="10" viewBox="0 0 10 10" style={{ flexShrink: 0 }}>
                                     <circle cx="5" cy="5" r="3" fill={isSubSelected ? '#2D4CD5' : '#C4C4D4'} />
                                   </svg>
-                                  <span style={{ fontSize: 13, color: isSubSelected ? '#2D4CD5' : '#5E5B73', fontWeight: isSubSelected ? 600 : 400, ...(activeTab === 0 ? { width: 146, flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' } : { minWidth: 106 }) }}>{s.name}</span>
-                                  {activeTab === 2 ? <Stars value={s.pct / 20} size={16} /> : <ScoreGauge pct={s.pct} width={activeTab === 0 ? 120 : undefined} />}
+                                  <span style={{ fontSize: 13, color: isSubSelected ? '#2D4CD5' : '#5E5B73', fontWeight: isSubSelected ? 600 : 400, width: 146, flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{s.name}</span>
+                                  {activeTab === 2 ? <Stars value={s.pct / 20} size={16} /> : <ScoreGauge pct={s.pct} width={activeTab !== 2 ? 120 : undefined} />}
                                   <span style={{ fontSize: 13, fontWeight: 500, color: isSubSelected ? '#2D4CD5' : '#5E5B73', minWidth: 40, textAlign: 'right' }}>
                                     {activeTab === 2 ? `${(s.pct / 20).toFixed(1)}` : `${s.pct}%`}
                                   </span>
