@@ -501,7 +501,7 @@ function OnboardingPopup({ onClose }) {
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20 }}>
             <div>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2D4CD5', borderRadius: 4, padding: '4px 12px', marginBottom: 12 }}>
-                <span style={{ fontSize: 12, fontWeight: 600, color: 'white', fontFamily: 'Inter, sans-serif', letterSpacing: 0.3 }}>NEW FEATURE</span>
+                <span style={{ fontSize: 10, fontWeight: 600, color: 'white', fontFamily: 'Inter, sans-serif', letterSpacing: 0.3 }}>NEW FEATURE</span>
               </div>
               <h2 style={{ fontSize: 22, fontWeight: 700, color: '#050033', margin: 0, fontFamily: 'Montserrat, sans-serif', lineHeight: 1.3 }}>
                 Meet your new Content Dashboard
@@ -525,7 +525,7 @@ function OnboardingPopup({ onClose }) {
           {/* 3 features */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 28 }}>
             {[
-              { color: '#2D4CD5', label: 'Live scores', desc: 'Content completion, Photo completion & Photo quality — updated in real time.',
+              { color: '#2D4CD5', label: 'Content scores', desc: 'Content completion, Photo completion & Photo quality — scored so you always know what to edit next.',
                 icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/>
                 </svg> },
@@ -555,7 +555,7 @@ function OnboardingPopup({ onClose }) {
           <button
             onClick={onClose}
             style={{
-              width: '100%', padding: '13px 0', borderRadius: 8, border: 'none',
+              width: '100%', padding: '13px 0', borderRadius: 100, border: 'none',
               background: '#050033', color: 'white', fontSize: 15, fontWeight: 600,
               fontFamily: 'Inter, sans-serif', cursor: 'pointer', letterSpacing: 0.2,
               transition: 'opacity 0.15s',
@@ -572,18 +572,10 @@ function OnboardingPopup({ onClose }) {
 }
 
 // ─── Dashboard Page ───────────────────────────────────────────────────────────
-export default function DashboardPage() {
+export default function DashboardPage({ showOnboarding = false, onCloseOnboarding = () => {}, onOpenOnboarding = () => {} }) {
   const [activeTab, setActiveTab]     = useState(0)
   const [selectedKpi, setSelectedKpi] = useState(null)
   const [expandedKpi, setExpandedKpi] = useState(null)
-  const [showOnboarding, setShowOnboarding] = useState(
-    () => !localStorage.getItem('hcm-dashboard-seen')
-  )
-
-  function closeOnboarding() {
-    localStorage.setItem('hcm-dashboard-seen', '1')
-    setShowOnboarding(false)
-  }
   const [search, setSearch]           = useState('')
   const [sortBy, setSortBy]           = useState('alpha')
   const [hoveredTab, setHoveredTab]   = useState(null)
@@ -918,7 +910,7 @@ export default function DashboardPage() {
       </div>
 
       <ActivityDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
-      {showOnboarding && <OnboardingPopup onClose={closeOnboarding} />}
+      {showOnboarding && <OnboardingPopup onClose={onCloseOnboarding} />}
 
     </div>
   )

@@ -181,7 +181,7 @@ function IconDocuments() {
 }
 
 // ─── Header ───────────────────────────────────────────────────────────────────
-function Header({ selectedHotel }) {
+function Header({ selectedHotel, onOpenOnboarding }) {
   const label = selectedHotel
     ? `${selectedHotel.code} ${selectedHotel.name}`
     : 'No hotel selected'
@@ -193,7 +193,7 @@ function Header({ selectedHotel }) {
       display: 'flex', alignItems: 'stretch',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-        <button style={{
+        <button onClick={onOpenOnboarding} style={{
           width: 68, height: 68, flexShrink: 0,
           background: NAVY, border: 'none', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -324,6 +324,13 @@ export default function App() {
   const [page, setPage] = useState('home')
   const [selectedHotelId, setSelectedHotelId] = useState(null)
   const [selectedElement, setSelectedElement] = useState(null)
+  const [showOnboarding, setShowOnboarding] = useState(false)
+
+  function openOnboarding() { setShowOnboarding(true) }
+  function closeOnboarding() {
+    localStorage.setItem('hcm-dashboard-seen', '1')
+    setShowOnboarding(false)
+  }
 
   const selectedHotel = HOTELS.find(h => h.id === selectedHotelId) ?? null
 
@@ -345,12 +352,12 @@ export default function App() {
   return (
     <div style={{ minHeight: '100vh', background: 'white', fontFamily: 'Inter, sans-serif' }}>
       <Toaster position="bottom-right" richColors />
-      <Header selectedHotel={selectedHotel} />
+      <Header selectedHotel={selectedHotel} onOpenOnboarding={openOnboarding} />
       <Sidebar page={page} setPage={setPage} hotelSelected={!!selectedHotel} />
       <main style={{ marginLeft: SIDEBAR_W, marginTop: HEADER_H }}>
         {page === 'description' ? <DetailsPage element={selectedElement} onBack={handleBackFromDescription} />
           : page === 'overview'  ? <OverviewPage onDescriptionClick={handleDescriptionClick} />
-          : page === 'score'     ? <DashboardPage />
+          : page === 'score'     ? <DashboardPage showOnboarding={showOnboarding} onCloseOnboarding={closeOnboarding} onOpenOnboarding={openOnboarding} />
           : page === 'components'? <ComponentsPage />
           : <HomePage selectedHotelId={selectedHotelId} onSelectHotel={handleSelectHotel} />}
       </main>
