@@ -43,17 +43,12 @@ function ScoreLegendTooltip({ anchorRef }: { anchorRef: React.RefObject<HTMLSpan
       <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
         {SCORE_LEVELS.map(level => (
           <div key={level.name} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            {/* Color dot */}
-            <span style={{
-              width: 8, height: 8, borderRadius: '50%',
-              background: level.main, flexShrink: 0,
-            }} />
             {/* Badge pill */}
             <span style={{
-              display: 'inline-flex', alignItems: 'center',
-              padding: '1px 7px', borderRadius: 22,
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              padding: '2px 10px', borderRadius: 100,
               background: level.bg, color: level.text,
-              fontSize: 11, fontWeight: 500, whiteSpace: 'nowrap',
+              fontSize: 11, fontWeight: 600, whiteSpace: 'nowrap',
               fontFamily: 'Roboto, sans-serif', flexShrink: 0,
             }}>
               {level.name}
@@ -91,26 +86,18 @@ export function ScoreBadge({ score, size = 'md' }: ScoreBadgeProps) {
         style={{
           display: 'inline-flex',
           alignItems: 'center',
-          padding: size === 'sm' ? '2px 8px' : '3px 12px',
-          borderRadius: 22,
+          justifyContent: 'center',
+          padding: size === 'sm' ? '3px 10px' : '4px 14px',
+          borderRadius: 100,
           background: level.bg,
           color: level.text,
           fontSize: size === 'sm' ? 12 : 14,
-          fontWeight: 500,
+          fontWeight: 600,
           whiteSpace: 'nowrap',
           fontFamily: 'Roboto, sans-serif',
           cursor: 'default',
         }}
       >
-        <span style={{
-          width: size === 'sm' ? 6 : 7,
-          height: size === 'sm' ? 6 : 7,
-          borderRadius: '50%',
-          background: level.main,
-          flexShrink: 0,
-          display: 'inline-block',
-          marginRight: size === 'sm' ? 5 : 6,
-        }} />
         {level.name}
       </span>
       {hovered && <ScoreLegendTooltip anchorRef={ref} />}

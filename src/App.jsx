@@ -16,9 +16,9 @@ const HEADER_H  = 68
 const HOTELS = [
   {
     id: 1, selected: true,
-    brand: 'Pullman',
-    code: '[6765]',
-    name: 'A0G5 - Pullman Sydney Penrith',
+    brand: 'Mercure',
+    code: '[1598]',
+    name: 'Hôtel Mercure Paris Tour Eiffel Grenelle',
     updated: 'Updated on 12/02/2026',
     score: 48,
     img: 'url(https://images.trvl-media.com/lodging/94000000/93520000/93518700/93518690/e94b74ee.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill)',

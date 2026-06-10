@@ -40,7 +40,7 @@ function SemiGauge({ pct, size = 260, trend = null }) {
         )
       })}
       <text
-        x={cx} y={cy - r * 0.5}
+        x={cx} y={cy - r * 0.5 + 12}
         textAnchor="middle" dominantBaseline="central"
         fill="#232136" fontSize={32} fontWeight={700} fontFamily="Montserrat,sans-serif"
       >
@@ -48,7 +48,7 @@ function SemiGauge({ pct, size = 260, trend = null }) {
       </text>
       {trend && (
         <text
-          x={cx} y={cy - r * 0.35 + 50}
+          x={cx} y={cy - r * 0.35 + 34}
           textAnchor="middle" dominantBaseline="central"
           fill="#22C55E" fontSize={13} fontWeight={500} fontFamily="Inter,sans-serif"
         >
@@ -56,15 +56,6 @@ function SemiGauge({ pct, size = 260, trend = null }) {
         </text>
       )}
     </svg>
-    {/* ScoreBadge HTML overlay — centré, sous le score */}
-    <div style={{
-      position: 'absolute',
-      top: cy - r * 0.5 + 22,
-      left: '50%',
-      transform: 'translateX(-50%)',
-    }}>
-      <ScoreBadge score={pct} size="sm" />
-    </div>
   </div>
   )
 }
@@ -113,10 +104,11 @@ function Card({ children, style = {} }) {
   )
 }
 
-function CardTitle({ children, info = false, scoreType = null, tooltipPlacement = 'bottom-left' }) {
+function CardTitle({ children, info = false, scoreType = null, tooltipPlacement = 'bottom-left', icon = null }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 6, margin: '0 0 4px' }}>
-      <h3 style={{ fontSize: 18, fontWeight: 700, color: '#232136', margin: 0, fontFamily: 'Montserrat, sans-serif' }}>{children}</h3>
+      {icon}
+      <h3 style={{ fontSize: 16, fontWeight: 500, color: '#232136', margin: 0, fontFamily: 'Roboto, sans-serif' }}>{children}</h3>
       {scoreType
         ? <ScoreTooltip scoreType={scoreType} placement={tooltipPlacement} />
         : info && <InfoIcon />
@@ -515,6 +507,23 @@ function ActivityDrawer({ open, onClose }) {
 
 // pct drives ScoreBadge + ScoreGauge automatically.
 // Photo quality uses starValue (2.5/5) → pct = starValue * 20 for scoring.
+const TAB_ICONS = [
+  // Content completion — document with lines
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#232136" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block', flexShrink: 0 }}>
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+    <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+  </svg>,
+  // Photo completion — camera
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#232136" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block', flexShrink: 0 }}>
+    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+    <circle cx="12" cy="13" r="4"/>
+  </svg>,
+  // Photo quality — star
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#232136" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block', flexShrink: 0 }}>
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/>
+  </svg>,
+]
+
 const TABS_META = [
   { title: 'Content completion', scoreType: 'content', tooltipPlacement: 'bottom-left',  pct: 51, trend: '+0.2 pts vs last month', stars: false },
   { title: 'Photo completion',   scoreType: 'media',   tooltipPlacement: 'bottom-left',  pct: 92, trend: '+0.2 pts vs last month', stars: false },
@@ -682,6 +691,9 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 24 }}>
             <SemiGauge pct={77.5} trend="+ 0.2 pts vs last month" />
             <div>
+              <div style={{ marginBottom: 8 }}>
+                <ScoreBadge score={77.5} size="sm" />
+              </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                 <p style={{ fontSize: 18, fontWeight: 500, color: '#1A1835', margin: 0, fontFamily: 'Roboto, sans-serif' }}>Good progress!</p>
               </div>
@@ -716,6 +728,10 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
                     </div>
                     <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 1 }}>{e.tab}</div>
                   </div>
+                  {/* Chevron */}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#050033" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                    <polyline points="9 18 15 12 9 6"/>
+                  </svg>
                 </div>
               )
             })}
@@ -734,7 +750,7 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
       </div>
 
       {/* ── Unified block: tabs + KPI table + detail panel ── */}
-      <div style={{ border: '1px solid #EBEBF5', borderRadius: 8, background: 'white', overflow: 'hidden', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
+      <div style={{ border: '1px solid #EBEBF5', borderRadius: 16, background: 'white', overflow: 'hidden', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
 
         {/* Tab headers — 1 col each */}
         {TABS_META.map((tab, i) => {
@@ -757,13 +773,13 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
                 transition: 'background 0.15s',
               }}>
               <div style={{ marginBottom: 4 }}>
-                <CardTitle scoreType={tab.scoreType} tooltipPlacement={tab.tooltipPlacement}>{tab.title}</CardTitle>
+                <CardTitle scoreType={tab.scoreType} tooltipPlacement={tab.tooltipPlacement} icon={TAB_ICONS[i]}>{tab.title}</CardTitle>
               </div>
               <SubLabel>Updated on 12/02/2026</SubLabel>
               <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8 }}>
                 {!tab.stars && (
                   <>
-                    <p style={{ fontSize: 22, fontWeight: 700, color: '#1A1835', margin: 0 }}>{tab.pct} %</p>
+                    <p style={{ fontSize: 26, fontWeight: 700, color: '#1A1835', margin: 0 }}>{tab.pct} %</p>
                     <ScoreBadge score={tab.pct} size="sm" />
                   </>
                 )}
@@ -772,7 +788,7 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
                 {tab.stars ? (
                   <>
                     <Stars value={tab.starValue} />
-                    <span style={{ fontSize: 22, fontWeight: 700, color: '#1A1835' }}>{tab.starValue} / 5</span>
+                    <span style={{ fontSize: 26, fontWeight: 700, color: '#1A1835' }}>{tab.starValue} / 5</span>
                     <ScoreBadge score={tab.pct} size="sm" />
                   </>
                 ) : (
@@ -867,7 +883,7 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
                         <polyline points="6 9 12 15 18 9"/>
                       </svg>
 
-                      <span style={{ fontSize: 14, color: isSelected ? '#2D4CD5' : '#374151', fontWeight: isSelected ? 600 : 400, width: 170, flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                      <span style={{ fontSize: 14, color: isSelected ? '#2D4CD5' : '#374151', fontWeight: isSelected ? 600 : 400, width: 377, flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                         {kpi.name}
                       </span>
 
@@ -875,7 +891,7 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
                         ? <span style={{ fontSize: 13, color: '#9CA3AF', flex: 1 }}>Empty</span>
                         : activeTab === 2
                           ? <Stars value={kpi.pct / 20} size={16} />
-                          : <ScoreGauge pct={kpi.pct} width={activeTab !== 2 ? 120 : undefined} />
+                          : <ScoreGauge pct={kpi.pct} />
                       }
 
                       <span style={{ fontSize: 14, fontWeight: 600, color: isSelected ? '#2D4CD5' : '#374151', minWidth: 40, textAlign: 'right' }}>
@@ -930,8 +946,8 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
                                   <svg width="10" height="10" viewBox="0 0 10 10" style={{ flexShrink: 0 }}>
                                     <circle cx="5" cy="5" r="3" fill={isSubSelected ? '#2D4CD5' : '#C4C4D4'} />
                                   </svg>
-                                  <span style={{ fontSize: 13, color: isSubSelected ? '#2D4CD5' : '#5E5B73', fontWeight: isSubSelected ? 600 : 400, width: 146, flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{s.name}</span>
-                                  {activeTab === 2 ? <Stars value={s.pct / 20} size={16} /> : <ScoreGauge pct={s.pct} width={activeTab !== 2 ? 120 : undefined} />}
+                                  <span style={{ fontSize: 13, color: isSubSelected ? '#2D4CD5' : '#5E5B73', fontWeight: isSubSelected ? 600 : 400, width: 353, flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{s.name}</span>
+                                  {activeTab === 2 ? <Stars value={s.pct / 20} size={16} /> : <ScoreGauge pct={s.pct} />}
                                   <span style={{ fontSize: 13, fontWeight: 500, color: isSubSelected ? '#2D4CD5' : '#5E5B73', minWidth: 40, textAlign: 'right' }}>
                                     {activeTab === 2 ? `${(s.pct / 20).toFixed(1)}` : `${s.pct}%`}
                                   </span>

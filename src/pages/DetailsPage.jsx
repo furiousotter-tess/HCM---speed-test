@@ -919,7 +919,7 @@ export default function DetailsPage({ element, onBack }) {
 
           <SectionCard icon={<DocTextIcon />} title="Distribution">
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <DataRow label="TARS Code" value="6765" />
+              <DataRow label="TARS Code" value="1598" />
               <div style={{ height: 1, background: '#D9D9D9' }} />
               <DataRow label="Classification" value="No" />
               <div style={{ height: 1, background: '#D9D9D9' }} />
