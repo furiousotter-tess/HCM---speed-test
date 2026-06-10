@@ -504,7 +504,7 @@ function OnboardingPopup({ onClose }) {
                 <span style={{ fontSize: 12, fontWeight: 600, color: 'white', fontFamily: 'Inter, sans-serif', letterSpacing: 0.3 }}>NEW FEATURE</span>
               </div>
               <h2 style={{ fontSize: 22, fontWeight: 700, color: '#050033', margin: 0, fontFamily: 'Montserrat, sans-serif', lineHeight: 1.3 }}>
-                Meet your new<br />Content Dashboard
+                Meet your new Content Dashboard
               </h2>
               <p style={{ fontSize: 16, color: '#5E5B73', margin: '6px 0 0', fontFamily: 'Roboto, sans-serif' }}>
                 Your content, scored. Your actions, clear.

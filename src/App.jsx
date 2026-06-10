@@ -203,7 +203,7 @@ function Header({ selectedHotel }) {
           <HamburgerIcon />
           <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: 9, letterSpacing: 0.5 }}>MENU</span>
         </button>
-        <span style={{ color: 'white', fontWeight: 700, fontSize: 20, padding: '0 28px', whiteSpace: 'nowrap', fontFamily: 'Inter, sans-serif' }}>
+        <span style={{ color: 'white', fontWeight: 700, fontSize: 18, padding: '0 28px', whiteSpace: 'nowrap', fontFamily: 'Inter, sans-serif' }}>
           Hotel content manager
         </span>
       </div>
