@@ -3,13 +3,14 @@ import { getScoreLevel } from '../lib/scoreColors'
 interface ScoreGaugeProps {
   pct: number
   height?: number
+  width?: number
 }
 
 /**
  * Horizontal progress bar whose fill color is derived from the score level.
  * Replaces any hardcoded color logic — just pass the score percentage.
  */
-export function ScoreGauge({ pct, height = 8 }: ScoreGaugeProps) {
+export function ScoreGauge({ pct, height = 8, width }: ScoreGaugeProps) {
   const level = getScoreLevel(pct)
 
   return (
@@ -19,8 +20,7 @@ export function ScoreGauge({ pct, height = 8 }: ScoreGaugeProps) {
         background: '#EEF0F8',
         borderRadius: 4,
         overflow: 'hidden',
-        flex: 1,
-        width: '100%',
+        ...(width ? { width } : { flex: 1, width: '100%' }),
       }}
     >
       <div

@@ -337,6 +337,11 @@ export default function App() {
     setSelectedElement(null)
   }
 
+  function handleSelectHotel(id) {
+    setSelectedHotelId(id)
+    setPage('score')
+  }
+
   return (
     <div style={{ minHeight: '100vh', background: 'white', fontFamily: 'Inter, sans-serif' }}>
       <Toaster position="bottom-right" richColors />
@@ -347,7 +352,7 @@ export default function App() {
           : page === 'overview'  ? <OverviewPage onDescriptionClick={handleDescriptionClick} />
           : page === 'score'     ? <DashboardPage />
           : page === 'components'? <ComponentsPage />
-          : <HomePage selectedHotelId={selectedHotelId} onSelectHotel={setSelectedHotelId} />}
+          : <HomePage selectedHotelId={selectedHotelId} onSelectHotel={handleSelectHotel} />}
       </main>
     </div>
   )

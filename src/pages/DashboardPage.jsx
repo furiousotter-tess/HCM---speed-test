@@ -22,7 +22,8 @@ function SemiGauge({ pct, size = 260, trend = null }) {
   const filled = Math.round((pct / 100) * N)
 
   return (
-    <svg width={size} height={svgH} style={{ display: 'block', flexShrink: 0 }}>
+  <div style={{ position: 'relative', width: size, flexShrink: 0 }}>
+    <svg width={size} height={svgH} style={{ display: 'block' }}>
       {Array.from({ length: N }, (_, i) => {
         const angleRad = Math.PI + ((i + 0.5) / N) * Math.PI
         const x        = cx + r * Math.cos(angleRad)
@@ -38,22 +39,6 @@ function SemiGauge({ pct, size = 260, trend = null }) {
           />
         )
       })}
-      {/* Status badge above score */}
-      {(() => {
-        const badgeY  = cy - r * 0.5 + 38
-        const pillW   = 96
-        const pillH   = 22
-        return (
-          <g>
-            <rect x={cx - pillW / 2} y={badgeY - pillH / 2} width={pillW} height={pillH} rx={11} fill={level.bg} />
-            <circle cx={cx - pillW / 2 + 14} cy={badgeY} r={4} fill={level.main} />
-            <text x={cx - pillW / 2 + 22} y={badgeY} dominantBaseline="central"
-              fill={level.text} fontSize={12} fontWeight={500} fontFamily="Roboto,sans-serif">
-              {level.name}
-            </text>
-          </g>
-        )
-      })()}
       <text
         x={cx} y={cy - r * 0.5}
         textAnchor="middle" dominantBaseline="central"
@@ -71,6 +56,16 @@ function SemiGauge({ pct, size = 260, trend = null }) {
         </text>
       )}
     </svg>
+    {/* ScoreBadge HTML overlay — centré, sous le score */}
+    <div style={{
+      position: 'absolute',
+      top: cy - r * 0.5 + 22,
+      left: '50%',
+      transform: 'translateX(-50%)',
+    }}>
+      <ScoreBadge score={pct} size="sm" />
+    </div>
+  </div>
   )
 }
 
@@ -121,7 +116,7 @@ function Card({ children, style = {} }) {
 function CardTitle({ children, info = false, scoreType = null, tooltipPlacement = 'bottom-left' }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 6, margin: '0 0 4px' }}>
-      <h3 style={{ fontSize: 20, fontWeight: 700, color: '#232136', margin: 0, fontFamily: 'Montserrat, sans-serif' }}>{children}</h3>
+      <h3 style={{ fontSize: 18, fontWeight: 700, color: '#232136', margin: 0, fontFamily: 'Montserrat, sans-serif' }}>{children}</h3>
       {scoreType
         ? <ScoreTooltip scoreType={scoreType} placement={tooltipPlacement} />
         : info && <InfoIcon />
@@ -131,7 +126,7 @@ function CardTitle({ children, info = false, scoreType = null, tooltipPlacement 
 }
 
 function SubLabel({ children }) {
-  return <p style={{ fontSize: 14, fontWeight: 400, color: '#5E5B73', margin: '0 0 16px', fontFamily: 'Roboto, sans-serif' }}>{children}</p>
+  return <p style={{ fontSize: 14, fontWeight: 400, color: '#5E5B73', margin: '0 0 24px', fontFamily: 'Roboto, sans-serif', color: '#898C8E' }}>{children}</p>
 }
 
 // ─── KPI Detail panel ─────────────────────────────────────────────────────────
@@ -176,7 +171,7 @@ function KpiDetail({ kpi, isQuality }) {
             <span style={{ fontSize: 16, fontWeight: 500, color: '#232136', fontFamily: 'Roboto, sans-serif' }}>Improvement</span>
           </div>
           {/* Insight text */}
-          <p style={{ fontSize: 16, fontWeight: 400, color: '#5E5B73', margin: 0, lineHeight: 1.6, fontFamily: 'Roboto, sans-serif' }}>
+          <p style={{ fontSize: 14, fontWeight: 400, color: '#5E5B73', margin: 0, lineHeight: 1.6, fontFamily: 'Roboto, sans-serif' }}>
             {kpi.insight}
           </p>
         </div>
@@ -200,124 +195,120 @@ function KpiDetail({ kpi, isQuality }) {
 const KPIS_BY_TAB = [
   // Tab 0 — Content completion
   [
-    { name: 'Hotel advantage',    pct: 72, trend: '+3.1 pts vs n-1', objective: 'Ensure the hotel advantage content is complete to highlight the property\'s unique selling points.', insight: 'Several advantage fields are partially filled. Complete them to better differentiate the hotel offer.', sub: [] },
-    { name: 'Guestrooms',         pct: 64, trend: '+2.4 pts vs n-1', objective: 'Verify that guestroom descriptions are detailed enough to set accurate guest expectations.',          insight: 'Type description and surface fields are below target. Completing them will push this category above 80%.',
+    { name: 'Hotel overview', pct: 53, trend: '+1.6 pts vs last month', objective: 'Measure the completeness of all hotel description fields used across channels.', insight: 'SEO and destination description fields have the most impact. Prioritise these to boost your score quickly.',
       sub: [
-        { name: 'Type description', pct: 58, trend: '+1.8 pts vs n-1', objective: 'Ensure each room type has a complete and engaging description for guests.',           insight: 'Description length is below the required minimum for 3 room types. Aim for at least 150 characters per type.' },
-        { name: 'Type',             pct: 80, trend: '+2.0 pts vs n-1', objective: 'Verify that all room types are correctly categorised and labelled.',                  insight: '2 room types are missing their category tag. Adding it will immediately improve discoverability.' },
-        { name: 'Surface',          pct: 50, trend: '+0.5 pts vs n-1', objective: 'Check that surface area is filled in for all room types.',                            insight: 'Surface data is missing for half the room types. This is a quick win — fill in m² and ft² for each.' },
-        { name: 'Max occupancy',    pct: 75, trend: '+3.0 pts vs n-1', objective: 'Ensure maximum occupancy is set for every room type to support booking accuracy.',    insight: '1 room type is missing its max occupancy value. A single update will bring this sub-category to 100%.' },
+        { name: 'Hotel description',         pct: 68, trend: '+2.5 pts vs last month', objective: 'Verify the main hotel description is engaging and covers the property\'s key highlights.', insight: 'The main description is 70% of the target length. Adding a paragraph about the hotel\'s unique atmosphere will complete it.' },
+        { name: 'Hotel SEO description',     pct: 45, trend: '+1.2 pts vs last month', objective: 'Ensure the SEO description is complete and keyword-optimised for search visibility.',    insight: 'The SEO description is under the recommended character count. Extend it to at least 160 characters for full impact.' },
+        { name: 'Hotel manager message',     pct: 38, trend: '-0.4 pts vs last month', objective: 'Check that the hotel manager message is personalised and complete.',                     insight: 'Only the opening sentence has been filled in. A full manager message adds a personal touch that improves conversion.' },
+        { name: 'Hotel Destination description', pct: 60, trend: '+1.8 pts vs last month', objective: 'Ensure the destination description helps guests understand the local area and attractions.', insight: 'Local transport and nearby attractions sections are incomplete. These are high-value fields for first-time visitors.' },
       ] },
-    { name: 'Hotel description',  pct: 53, trend: '+1.6 pts vs n-1', objective: 'Measure the completeness of all hotel description fields used across channels.',                     insight: 'SEO and destination description fields have the most impact. Prioritise these to boost your score quickly.',
+    { name: 'Rooms & accommodations', pct: 64, trend: '+2.4 pts vs last month', objective: 'Verify that room descriptions are detailed enough to set accurate guest expectations.', insight: 'Room description fields are below target. Completing them will push this category above 80%.',
       sub: [
-        { name: 'SEO description',         pct: 45, trend: '+1.2 pts vs n-1', objective: 'Ensure the SEO description is complete and keyword-optimised for search visibility.',    insight: 'The SEO description is under the recommended character count. Extend it to at least 160 characters for full impact.' },
-        { name: 'Main description',        pct: 68, trend: '+2.5 pts vs n-1', objective: 'Verify the main hotel description is engaging and covers the property\'s key highlights.', insight: 'The main description is 70% of the target length. Adding a paragraph about the hotel\'s unique atmosphere will complete it.' },
-        { name: 'Hotel manager message',   pct: 38, trend: '-0.4 pts vs n-1', objective: 'Check that the hotel manager message is personalised and complete.',                     insight: 'Only the opening sentence has been filled in. A full manager message adds a personal touch that improves conversion.' },
-        { name: 'Destination description', pct: 60, trend: '+1.8 pts vs n-1', objective: 'Ensure the destination description helps guests understand the local area and attractions.', insight: 'Local transport and nearby attractions sections are incomplete. These are high-value fields for first-time visitors.' },
+        { name: 'Rooms', pct: 64, trend: '+2.4 pts vs last month', objective: 'Ensure each room type has a complete and engaging description for guests.', insight: 'Description length is below the required minimum for 3 room types. Aim for at least 150 characters per type.' },
       ] },
   ],
   // Tab 1 — Media completion
   [
-    { name: 'Bar',           pct: 80, trend: '+3.0 pts vs n-1', objective: 'Ensure the bar area has enough photos to attract guests interested in on-site drinks and dining.', insight: 'Carrousel is complete. Marcel and Tori Café & Bar are each missing 2 photos — add evening ambiance shots to reach 100%.',
+    { name: 'Bar',           pct: 80, trend: '+3.0 pts vs last month', objective: 'Ensure the bar area has enough photos to attract guests interested in on-site drinks and dining.', insight: 'Carrousel is complete. Marcel and Tori Café & Bar are each missing 2 photos — add evening ambiance shots to reach 100%.',
       sub: [
-        { name: 'Carrousel',        pct: 100, trend: '+0.0 pts vs n-1', objective: 'Verify the main bar carousel has the required 6 images.',               insight: 'All 6 required images are present. No action needed.' },
-        { name: 'Marcel',           pct: 67,  trend: '+2.1 pts vs n-1', objective: 'Ensure Marcel has enough photos to highlight its cocktail offering.',    insight: '2 photos missing. An interior wide-shot and an evening ambiance shot are the priority.' },
-        { name: 'Tori café & Bar',  pct: 50,  trend: '-0.5 pts vs n-1', objective: 'Ensure Tori Café & Bar is visually represented with at least 4 images.', insight: '2 of 4 required photos are missing. A bar counter close-up and a seating area shot are recommended.' },
+        { name: 'Carrousel',        pct: 100, trend: '+0.0 pts vs last month', objective: 'Verify the main bar carousel has the required 6 images.',               insight: 'All 6 required images are present. No action needed.' },
+        { name: 'Marcel',           pct: 67,  trend: '+2.1 pts vs last month', objective: 'Ensure Marcel has enough photos to highlight its cocktail offering.',    insight: '2 photos missing. An interior wide-shot and an evening ambiance shot are the priority.' },
+        { name: 'Tori café & Bar',  pct: 50,  trend: '-0.5 pts vs last month', objective: 'Ensure Tori Café & Bar is visually represented with at least 4 images.', insight: '2 of 4 required photos are missing. A bar counter close-up and a seating area shot are recommended.' },
       ] },
-    { name: 'Bedroom',       pct: 65, trend: '+2.0 pts vs n-1', objective: 'Verify that all room types have sufficient photo coverage for guest decision-making.', insight: 'Suite Junior is critically under-represented. Room Deluxe and Room Superior each need 1 additional photo.',
+    { name: 'Bedroom',       pct: 65, trend: '+2.0 pts vs last month', objective: 'Verify that all room types have sufficient photo coverage for guest decision-making.', insight: 'Suite Junior is critically under-represented. Room Deluxe and Room Superior each need 1 additional photo.',
       sub: [
-        { name: 'Carrousel',     pct: 100, trend: '+0.0 pts vs n-1', objective: 'Verify the main bedroom carousel meets the 6-image requirement.',                    insight: 'All 6 required images present. No action needed.' },
-        { name: 'Room Deluxe',   pct: 83,  trend: '+1.5 pts vs n-1', objective: 'Ensure Room Deluxe has complete photo coverage of all key features.',               insight: '1 photo missing — a bathroom detail shot would complete this room type.' },
-        { name: 'Room Superior', pct: 67,  trend: '+2.5 pts vs n-1', objective: 'Verify Room Superior has enough images to set accurate guest expectations.',         insight: '2 photos missing. A wide bedroom shot and a view-from-window photo are recommended.' },
-        { name: 'Suite Junior',  pct: 33,  trend: '-1.0 pts vs n-1', objective: 'Ensure Suite Junior is fully documented with a minimum of 6 images.',               insight: '4 of 6 required photos are missing. Prioritise a full-suite layout shot, bathroom, and living area.' },
+        { name: 'Carrousel',     pct: 100, trend: '+0.0 pts vs last month', objective: 'Verify the main bedroom carousel meets the 6-image requirement.',                    insight: 'All 6 required images present. No action needed.' },
+        { name: 'Room Deluxe',   pct: 83,  trend: '+1.5 pts vs last month', objective: 'Ensure Room Deluxe has complete photo coverage of all key features.',               insight: '1 photo missing — a bathroom detail shot would complete this room type.' },
+        { name: 'Room Superior', pct: 67,  trend: '+2.5 pts vs last month', objective: 'Verify Room Superior has enough images to set accurate guest expectations.',         insight: '2 photos missing. A wide bedroom shot and a view-from-window photo are recommended.' },
+        { name: 'Suite Junior',  pct: 33,  trend: '-1.0 pts vs last month', objective: 'Ensure Suite Junior is fully documented with a minimum of 6 images.',               insight: '4 of 6 required photos are missing. Prioritise a full-suite layout shot, bathroom, and living area.' },
       ] },
-    { name: 'Breakfast',     pct: 95, trend: '+2.1 pts vs n-1', objective: 'Verify that breakfast visuals convey the quality and variety of the morning offering.', insight: '1 photo missing from the Carrousel — a wide buffet setup shot would complete this category.',
+    { name: 'Breakfast',     pct: 95, trend: '+2.1 pts vs last month', objective: 'Verify that breakfast visuals convey the quality and variety of the morning offering.', insight: '1 photo missing from the Carrousel — a wide buffet setup shot would complete this category.',
       sub: [
-        { name: 'Carrousel', pct: 95, trend: '+2.1 pts vs n-1', objective: 'Ensure the breakfast carousel covers the buffet display, dining room and a detail shot.', insight: '1 image missing. A wide-angle shot of the full buffet layout is recommended.' },
+        { name: 'Carrousel', pct: 95, trend: '+2.1 pts vs last month', objective: 'Ensure the breakfast carousel covers the buffet display, dining room and a detail shot.', insight: '1 image missing. A wide-angle shot of the full buffet layout is recommended.' },
       ] },
-    { name: 'Fitness',       pct: 88, trend: '+1.5 pts vs n-1', objective: 'Check that fitness facilities are fully and attractively photographed.', insight: '1 photo of the cardio area is blurred. Replace it with a sharp, well-lit shot for a perfect score.',
+    { name: 'Fitness',       pct: 88, trend: '+1.5 pts vs last month', objective: 'Check that fitness facilities are fully and attractively photographed.', insight: '1 photo of the cardio area is blurred. Replace it with a sharp, well-lit shot for a perfect score.',
       sub: [
-        { name: 'Carrousel', pct: 88, trend: '+1.5 pts vs n-1', objective: 'Ensure the fitness carousel covers equipment, open floor space and natural light.', insight: '1 cardio area photo is blurred. A sharp replacement will bring this to 100%.' },
+        { name: 'Carrousel', pct: 88, trend: '+1.5 pts vs last month', objective: 'Ensure the fitness carousel covers equipment, open floor space and natural light.', insight: '1 cardio area photo is blurred. A sharp replacement will bring this to 100%.' },
       ] },
-    { name: 'Hotel',         pct: 88, trend: '+4.2 pts vs n-1', objective: 'Assess whether hotel exterior, lobby and common area photos are complete.', insight: 'Rooftop terrace photos are incomplete — 2 more images are needed to fulfil the requirement.',
+    { name: 'Hotel',         pct: 88, trend: '+4.2 pts vs last month', objective: 'Assess whether hotel exterior, lobby and common area photos are complete.', insight: 'Rooftop terrace photos are incomplete — 2 more images are needed to fulfil the requirement.',
       sub: [
-        { name: 'Carrousel', pct: 88, trend: '+4.2 pts vs n-1', objective: 'Ensure the hotel carousel has images covering the exterior, lobby, pool and signature spaces.', insight: '2 rooftop terrace photos are missing. Add a day and a dusk shot to complete the set.' },
+        { name: 'Carrousel', pct: 88, trend: '+4.2 pts vs last month', objective: 'Ensure the hotel carousel has images covering the exterior, lobby, pool and signature spaces.', insight: '2 rooftop terrace photos are missing. Add a day and a dusk shot to complete the set.' },
       ] },
-    { name: 'Meeting Room',  pct: 62, trend: '+1.8 pts vs n-1', objective: 'Check that all meeting rooms and conference spaces are documented with at least 4 images each.', insight: 'Ron Mulock AO 2 and John Farragher Boardroom are critically incomplete. Carrousel and Woodrow Room are at full coverage.',
+    { name: 'Meeting Room',  pct: 62, trend: '+1.8 pts vs last month', objective: 'Check that all meeting rooms and conference spaces are documented with at least 4 images each.', insight: 'Ron Mulock AO 2 and John Farragher Boardroom are critically incomplete. Carrousel and Woodrow Room are at full coverage.',
       sub: [
-        { name: 'Carrousel',                  pct: 100, trend: '+0.0 pts vs n-1', objective: 'Verify the main meeting room carousel is complete.',                              insight: 'All required images present. No action needed.' },
-        { name: 'Hunter Room',                pct: 75,  trend: '+2.0 pts vs n-1', objective: 'Ensure Hunter Room has a full photo set covering setup options.',                  insight: '1 photo missing — a boardroom-style setup shot is recommended.' },
-        { name: 'Jamison Room',               pct: 75,  trend: '+1.5 pts vs n-1', objective: 'Verify Jamison Room has at least 4 photos including layout variations.',           insight: '1 photo missing. A classroom-layout shot would complete the set.' },
-        { name: 'John Farragher Boardroom',   pct: 50,  trend: '-0.8 pts vs n-1', objective: 'Ensure the boardroom has photos covering the table, AV equipment and natural light.',insight: '2 photos missing. A wide boardroom shot and a detail of the AV setup are priorities.' },
-        { name: 'Ron Mulock AO 2',            pct: 25,  trend: '-2.2 pts vs n-1', objective: 'Verify this room has a minimum photo set to support bookings.',                    insight: '3 of 4 required photos are missing. Urgent: add a full-room, a detail and a natural-light shot.' },
-        { name: 'Woodrow Room',               pct: 100, trend: '+3.0 pts vs n-1', objective: 'Confirm the Woodrow Room photo coverage is complete.',                             insight: 'All required images present. No action needed.' },
-        { name: 'WSCC 3A',                    pct: 50,  trend: '+0.5 pts vs n-1', objective: 'Ensure WSCC 3A has adequate coverage to support event bookings.',                  insight: '2 photos missing. A full-room overview and a detail of the partition wall are recommended.' },
-        { name: 'WSCC 3B',                    pct: 50,  trend: '+0.5 pts vs n-1', objective: 'Ensure WSCC 3B has adequate coverage to support event bookings.',                  insight: '2 photos missing — mirror the photo set used for WSCC 3A.' },
+        { name: 'Carrousel',                  pct: 100, trend: '+0.0 pts vs last month', objective: 'Verify the main meeting room carousel is complete.',                              insight: 'All required images present. No action needed.' },
+        { name: 'Hunter Room',                pct: 75,  trend: '+2.0 pts vs last month', objective: 'Ensure Hunter Room has a full photo set covering setup options.',                  insight: '1 photo missing — a boardroom-style setup shot is recommended.' },
+        { name: 'Jamison Room',               pct: 75,  trend: '+1.5 pts vs last month', objective: 'Verify Jamison Room has at least 4 photos including layout variations.',           insight: '1 photo missing. A classroom-layout shot would complete the set.' },
+        { name: 'John Farragher Boardroom',   pct: 50,  trend: '-0.8 pts vs last month', objective: 'Ensure the boardroom has photos covering the table, AV equipment and natural light.',insight: '2 photos missing. A wide boardroom shot and a detail of the AV setup are priorities.' },
+        { name: 'Ron Mulock AO 2',            pct: 25,  trend: '-2.2 pts vs last month', objective: 'Verify this room has a minimum photo set to support bookings.',                    insight: '3 of 4 required photos are missing. Urgent: add a full-room, a detail and a natural-light shot.' },
+        { name: 'Woodrow Room',               pct: 100, trend: '+3.0 pts vs last month', objective: 'Confirm the Woodrow Room photo coverage is complete.',                             insight: 'All required images present. No action needed.' },
+        { name: 'WSCC 3A',                    pct: 50,  trend: '+0.5 pts vs last month', objective: 'Ensure WSCC 3A has adequate coverage to support event bookings.',                  insight: '2 photos missing. A full-room overview and a detail of the partition wall are recommended.' },
+        { name: 'WSCC 3B',                    pct: 50,  trend: '+0.5 pts vs last month', objective: 'Ensure WSCC 3B has adequate coverage to support event bookings.',                  insight: '2 photos missing — mirror the photo set used for WSCC 3A.' },
       ] },
-    { name: 'Restaurant',    pct: 82, trend: '+2.8 pts vs n-1', objective: 'Ensure the restaurant and its outlets are visually documented for guest appetite appeal.', insight: 'Carrousel is complete. Marcel is missing 2 photos — plated dish and interior ambiance shots are recommended.',
+    { name: 'Restaurant',    pct: 82, trend: '+2.8 pts vs last month', objective: 'Ensure the restaurant and its outlets are visually documented for guest appetite appeal.', insight: 'Carrousel is complete. Marcel is missing 2 photos — plated dish and interior ambiance shots are recommended.',
       sub: [
-        { name: 'Carrousel', pct: 100, trend: '+0.0 pts vs n-1', objective: 'Verify the main restaurant carousel meets the 6-image requirement.',                    insight: 'All 6 required images present. No action needed.' },
-        { name: 'Marcel',    pct: 64,  trend: '+3.5 pts vs n-1', objective: 'Ensure Marcel restaurant has photos covering ambiance, plated dishes and bar counter.', insight: '2 photos missing. A hero dish plating shot and a dining-room ambiance photo are top priorities.' },
+        { name: 'Carrousel', pct: 100, trend: '+0.0 pts vs last month', objective: 'Verify the main restaurant carousel meets the 6-image requirement.',                    insight: 'All 6 required images present. No action needed.' },
+        { name: 'Marcel',    pct: 64,  trend: '+3.5 pts vs last month', objective: 'Ensure Marcel restaurant has photos covering ambiance, plated dishes and bar counter.', insight: '2 photos missing. A hero dish plating shot and a dining-room ambiance photo are top priorities.' },
       ] },
-    { name: 'Service',       pct: 90, trend: '+1.2 pts vs n-1', objective: 'Ensure service and amenity areas are visually represented.', insight: 'Almost complete — 1 image is missing from the Carrousel. A signature service moment shot is recommended.',
+    { name: 'Service',       pct: 90, trend: '+1.2 pts vs last month', objective: 'Ensure service and amenity areas are visually represented.', insight: 'Almost complete — 1 image is missing from the Carrousel. A signature service moment shot is recommended.',
       sub: [
-        { name: 'Carrousel', pct: 90, trend: '+1.2 pts vs n-1', objective: 'Verify the service carousel covers key guest-facing service moments.', insight: '1 image missing. A concierge or in-room service action shot would complete this category.' },
+        { name: 'Carrousel', pct: 90, trend: '+1.2 pts vs last month', objective: 'Verify the service carousel covers key guest-facing service moments.', insight: '1 image missing. A concierge or in-room service action shot would complete this category.' },
       ] },
-    { name: 'Suite',         pct: 55, trend: '+0.8 pts vs n-1', objective: 'Verify that suite accommodations are fully documented for premium guests.', insight: '3 of 6 required Carrousel images are missing. Bathroom, living area and view shots are the priority.',
+    { name: 'Suite',         pct: 55, trend: '+0.8 pts vs last month', objective: 'Verify that suite accommodations are fully documented for premium guests.', insight: '3 of 6 required Carrousel images are missing. Bathroom, living area and view shots are the priority.',
       sub: [
-        { name: 'Carrousel', pct: 55, trend: '+0.8 pts vs n-1', objective: 'Ensure the suite carousel covers all key areas: bedroom, bathroom, living space and view.', insight: '3 photos missing. Prioritise bathroom, separate living area and a signature view shot.' },
+        { name: 'Carrousel', pct: 55, trend: '+0.8 pts vs last month', objective: 'Ensure the suite carousel covers all key areas: bedroom, bathroom, living space and view.', insight: '3 photos missing. Prioritise bathroom, separate living area and a signature view shot.' },
       ] },
   ],
   // Tab 2 — Photo quality
   [
-    { name: 'Bar',           pct: 88, trend: '+2.5 pts vs n-1', objective: 'Assess the visual quality and brand alignment of all bar photography.', insight: 'Carrousel and Marcel are strong. Tori Café & Bar has 2 underexposed images that need reshooting.',
+    { name: 'Bar',           pct: 88, trend: '+2.5 pts vs last month', objective: 'Assess the visual quality and brand alignment of all bar photography.', insight: 'Carrousel and Marcel are strong. Tori Café & Bar has 2 underexposed images that need reshooting.',
       sub: [
-        { name: 'Carrousel',        pct: 95, trend: '+3.0 pts vs n-1', objective: 'Verify that carousel images are sharp, well-lit and brand-compliant.',             insight: 'All images meet resolution and brand standards. No action needed.' },
-        { name: 'Marcel',           pct: 88, trend: '+2.0 pts vs n-1', objective: 'Ensure Marcel photos are professionally styled and brand-aligned.',                 insight: '1 cocktail close-up is slightly overexposed — a minor correction will bring this to 95%+.' },
-        { name: 'Tori café & Bar',  pct: 62, trend: '-0.5 pts vs n-1', objective: 'Check that Tori Café & Bar images meet resolution and brand framing standards.',    insight: '2 images are underexposed. Reshoot during peak hours with better ambient lighting.' },
+        { name: 'Carrousel',        pct: 95, trend: '+3.0 pts vs last month', objective: 'Verify that carousel images are sharp, well-lit and brand-compliant.',             insight: 'All images meet resolution and brand standards. No action needed.' },
+        { name: 'Marcel',           pct: 88, trend: '+2.0 pts vs last month', objective: 'Ensure Marcel photos are professionally styled and brand-aligned.',                 insight: '1 cocktail close-up is slightly overexposed — a minor correction will bring this to 95%+.' },
+        { name: 'Tori café & Bar',  pct: 62, trend: '-0.5 pts vs last month', objective: 'Check that Tori Café & Bar images meet resolution and brand framing standards.',    insight: '2 images are underexposed. Reshoot during peak hours with better ambient lighting.' },
       ] },
-    { name: 'Bedroom',       pct: 65, trend: '+1.2 pts vs n-1', objective: 'Evaluate bedroom imagery for resolution, composition and brand compliance.', insight: 'Suite Junior photography is below brand standards. Room Superior needs minor colour correction.',
+    { name: 'Bedroom',       pct: 65, trend: '+1.2 pts vs last month', objective: 'Evaluate bedroom imagery for resolution, composition and brand compliance.', insight: 'Suite Junior photography is below brand standards. Room Superior needs minor colour correction.',
       sub: [
-        { name: 'Carrousel',     pct: 90, trend: '+2.0 pts vs n-1', objective: 'Verify main carousel images are sharp, well-composed and brand-compliant.',             insight: 'Strong set overall. 1 image has a slight white-balance issue — a quick correction is recommended.' },
-        { name: 'Room Deluxe',   pct: 78, trend: '+1.5 pts vs n-1', objective: 'Ensure Room Deluxe photos reflect brand identity and premium positioning.',             insight: '1 image is not brand-compliant. Consult brand guidelines for framing and lighting standards.' },
-        { name: 'Room Superior', pct: 60, trend: '+0.8 pts vs n-1', objective: 'Verify Room Superior imagery meets minimum resolution and composition standards.',       insight: '2 images require colour correction. The window shot is overexposed — reshoot with exposure control.' },
-        { name: 'Suite Junior',  pct: 30, trend: '-1.8 pts vs n-1', objective: 'Ensure Suite Junior photography is professionally styled and brand-aligned.',           insight: 'Most photos are below quality threshold. A dedicated professional reshoot is strongly recommended.' },
+        { name: 'Carrousel',     pct: 90, trend: '+2.0 pts vs last month', objective: 'Verify main carousel images are sharp, well-composed and brand-compliant.',             insight: 'Strong set overall. 1 image has a slight white-balance issue — a quick correction is recommended.' },
+        { name: 'Room Deluxe',   pct: 78, trend: '+1.5 pts vs last month', objective: 'Ensure Room Deluxe photos reflect brand identity and premium positioning.',             insight: '1 image is not brand-compliant. Consult brand guidelines for framing and lighting standards.' },
+        { name: 'Room Superior', pct: 60, trend: '+0.8 pts vs last month', objective: 'Verify Room Superior imagery meets minimum resolution and composition standards.',       insight: '2 images require colour correction. The window shot is overexposed — reshoot with exposure control.' },
+        { name: 'Suite Junior',  pct: 30, trend: '-1.8 pts vs last month', objective: 'Ensure Suite Junior photography is professionally styled and brand-aligned.',           insight: 'Most photos are below quality threshold. A dedicated professional reshoot is strongly recommended.' },
       ] },
-    { name: 'Breakfast',     pct: 76, trend: '+1.8 pts vs n-1', objective: 'Evaluate whether breakfast photos meet brand identity and lighting standards.', insight: '2 images from the Carrousel are flagged as low-light. Retaking in natural morning light will improve quality.',
+    { name: 'Breakfast',     pct: 76, trend: '+1.8 pts vs last month', objective: 'Evaluate whether breakfast photos meet brand identity and lighting standards.', insight: '2 images from the Carrousel are flagged as low-light. Retaking in natural morning light will improve quality.',
       sub: [
-        { name: 'Carrousel', pct: 76, trend: '+1.8 pts vs n-1', objective: 'Ensure the breakfast carousel is bright, welcoming and aligned with brand standards.', insight: '2 low-light images identified. Retaking during morning service in natural light will push quality above 90%.' },
+        { name: 'Carrousel', pct: 76, trend: '+1.8 pts vs last month', objective: 'Ensure the breakfast carousel is bright, welcoming and aligned with brand standards.', insight: '2 low-light images identified. Retaking during morning service in natural light will push quality above 90%.' },
       ] },
-    { name: 'Fitness',       pct: 82, trend: '+2.0 pts vs n-1', objective: 'Check that fitness area photos meet resolution and brand framing standards.', insight: '1 image of the locker room is too dark — a brighter, cleaner replacement is recommended.',
+    { name: 'Fitness',       pct: 82, trend: '+2.0 pts vs last month', objective: 'Check that fitness area photos meet resolution and brand framing standards.', insight: '1 image of the locker room is too dark — a brighter, cleaner replacement is recommended.',
       sub: [
-        { name: 'Carrousel', pct: 82, trend: '+2.0 pts vs n-1', objective: 'Ensure fitness carousel images are sharp, well-lit and match the brand active lifestyle identity.', insight: '1 locker room photo is too dark. A brighter replacement will push quality above 90%.' },
+        { name: 'Carrousel', pct: 82, trend: '+2.0 pts vs last month', objective: 'Ensure fitness carousel images are sharp, well-lit and match the brand active lifestyle identity.', insight: '1 locker room photo is too dark. A brighter replacement will push quality above 90%.' },
       ] },
-    { name: 'Hotel',         pct: 70, trend: '+0.9 pts vs n-1', objective: 'Check overall hotel photography quality against brand positioning standards.', insight: 'Lobby photos are strong, but exterior night shots are underexposed. Consider a professional reshoot.',
+    { name: 'Hotel',         pct: 70, trend: '+0.9 pts vs last month', objective: 'Check overall hotel photography quality against brand positioning standards.', insight: 'Lobby photos are strong, but exterior night shots are underexposed. Consider a professional reshoot.',
       sub: [
-        { name: 'Carrousel', pct: 70, trend: '+0.9 pts vs n-1', objective: 'Verify that hotel carousel images cover key spaces at the right quality level.', insight: 'Exterior night shots are underexposed. A professional reshoot with proper lighting will significantly improve the score.' },
+        { name: 'Carrousel', pct: 70, trend: '+0.9 pts vs last month', objective: 'Verify that hotel carousel images cover key spaces at the right quality level.', insight: 'Exterior night shots are underexposed. A professional reshoot with proper lighting will significantly improve the score.' },
       ] },
-    { name: 'Meeting Room',  pct: 72, trend: '+2.2 pts vs n-1', objective: 'Verify that all meeting room photos convey a professional and welcoming environment.', insight: 'Ron Mulock AO 2 and WSCC rooms have quality issues. Carrousel, Woodrow Room and Hunter Room are strong.',
+    { name: 'Meeting Room',  pct: 72, trend: '+2.2 pts vs last month', objective: 'Verify that all meeting room photos convey a professional and welcoming environment.', insight: 'Ron Mulock AO 2 and WSCC rooms have quality issues. Carrousel, Woodrow Room and Hunter Room are strong.',
       sub: [
-        { name: 'Carrousel',                  pct: 95, trend: '+1.0 pts vs n-1', objective: 'Ensure main carousel images are professionally shot and brand-compliant.',           insight: 'Excellent quality. No action needed.' },
-        { name: 'Hunter Room',                pct: 82, trend: '+2.5 pts vs n-1', objective: 'Check Hunter Room photos for sharpness, lighting and brand alignment.',              insight: '1 image is slightly dark. A brighter replacement will bring this room to 90%+.' },
-        { name: 'Jamison Room',               pct: 78, trend: '+1.8 pts vs n-1', objective: 'Verify Jamison Room photos meet resolution and staging standards.',                  insight: '1 wide shot shows an unmade table. Restage and reshoot for brand compliance.' },
-        { name: 'John Farragher Boardroom',   pct: 68, trend: '-0.5 pts vs n-1', objective: 'Ensure the boardroom is photographed at a quality level that reflects its premium status.', insight: '2 photos have insufficient resolution. Reshoot with a minimum 3700px target.' },
-        { name: 'Ron Mulock AO 2',            pct: 48, trend: '-1.5 pts vs n-1', objective: 'Verify Ron Mulock AO 2 photos are sharp, well-lit and brand-compliant.',             insight: 'Most images are below threshold. A professional reshoot covering full-room, detail and AV setup is recommended.' },
-        { name: 'Woodrow Room',               pct: 88, trend: '+3.2 pts vs n-1', objective: 'Confirm Woodrow Room image quality meets brand standards.',                          insight: 'Strong set. 1 image has a slight exposure issue — a quick colour correction is all that is needed.' },
-        { name: 'WSCC 3A',                    pct: 65, trend: '+0.8 pts vs n-1', objective: 'Check WSCC 3A photos for lighting quality and professional presentation.',           insight: '2 images are overexposed. Reshoot with controlled lighting to reach brand-compliance.' },
-        { name: 'WSCC 3B',                    pct: 65, trend: '+0.8 pts vs n-1', objective: 'Check WSCC 3B photos for lighting quality and professional presentation.',           insight: '2 images are overexposed — same issue as WSCC 3A. A joint reshoot session is recommended.' },
+        { name: 'Carrousel',                  pct: 95, trend: '+1.0 pts vs last month', objective: 'Ensure main carousel images are professionally shot and brand-compliant.',           insight: 'Excellent quality. No action needed.' },
+        { name: 'Hunter Room',                pct: 82, trend: '+2.5 pts vs last month', objective: 'Check Hunter Room photos for sharpness, lighting and brand alignment.',              insight: '1 image is slightly dark. A brighter replacement will bring this room to 90%+.' },
+        { name: 'Jamison Room',               pct: 78, trend: '+1.8 pts vs last month', objective: 'Verify Jamison Room photos meet resolution and staging standards.',                  insight: '1 wide shot shows an unmade table. Restage and reshoot for brand compliance.' },
+        { name: 'John Farragher Boardroom',   pct: 68, trend: '-0.5 pts vs last month', objective: 'Ensure the boardroom is photographed at a quality level that reflects its premium status.', insight: '2 photos have insufficient resolution. Reshoot with a minimum 3700px target.' },
+        { name: 'Ron Mulock AO 2',            pct: 48, trend: '-1.5 pts vs last month', objective: 'Verify Ron Mulock AO 2 photos are sharp, well-lit and brand-compliant.',             insight: 'Most images are below threshold. A professional reshoot covering full-room, detail and AV setup is recommended.' },
+        { name: 'Woodrow Room',               pct: 88, trend: '+3.2 pts vs last month', objective: 'Confirm Woodrow Room image quality meets brand standards.',                          insight: 'Strong set. 1 image has a slight exposure issue — a quick colour correction is all that is needed.' },
+        { name: 'WSCC 3A',                    pct: 65, trend: '+0.8 pts vs last month', objective: 'Check WSCC 3A photos for lighting quality and professional presentation.',           insight: '2 images are overexposed. Reshoot with controlled lighting to reach brand-compliance.' },
+        { name: 'WSCC 3B',                    pct: 65, trend: '+0.8 pts vs last month', objective: 'Check WSCC 3B photos for lighting quality and professional presentation.',           insight: '2 images are overexposed — same issue as WSCC 3A. A joint reshoot session is recommended.' },
       ] },
-    { name: 'Restaurant',    pct: 80, trend: '+3.0 pts vs n-1', objective: 'Assess restaurant photography for brand alignment, food styling and ambiance.', insight: 'Carrousel is strong. Marcel has 1 dish photo that is overlit — a quick correction will improve the score.',
+    { name: 'Restaurant',    pct: 80, trend: '+3.0 pts vs last month', objective: 'Assess restaurant photography for brand alignment, food styling and ambiance.', insight: 'Carrousel is strong. Marcel has 1 dish photo that is overlit — a quick correction will improve the score.',
       sub: [
-        { name: 'Carrousel', pct: 92, trend: '+2.0 pts vs n-1', objective: 'Verify the main restaurant carousel meets quality and brand standards.',           insight: 'Excellent quality. No action needed.' },
-        { name: 'Marcel',    pct: 68, trend: '+4.0 pts vs n-1', objective: 'Ensure Marcel food and ambiance photography is brand-aligned and professionally styled.', insight: '1 hero dish photo is overlit and lacks depth. A professional food stylist reshoot is recommended.' },
+        { name: 'Carrousel', pct: 92, trend: '+2.0 pts vs last month', objective: 'Verify the main restaurant carousel meets quality and brand standards.',           insight: 'Excellent quality. No action needed.' },
+        { name: 'Marcel',    pct: 68, trend: '+4.0 pts vs last month', objective: 'Ensure Marcel food and ambiance photography is brand-aligned and professionally styled.', insight: '1 hero dish photo is overlit and lacks depth. A professional food stylist reshoot is recommended.' },
       ] },
-    { name: 'Service',       pct: 85, trend: '+1.5 pts vs n-1', objective: 'Verify that service area images are sharp, welcoming and brand-aligned.', insight: '1 image in the Carrousel shows a staff member out of uniform — replace with a brand-compliant alternative.',
+    { name: 'Service',       pct: 85, trend: '+1.5 pts vs last month', objective: 'Verify that service area images are sharp, welcoming and brand-aligned.', insight: '1 image in the Carrousel shows a staff member out of uniform — replace with a brand-compliant alternative.',
       sub: [
-        { name: 'Carrousel', pct: 85, trend: '+1.5 pts vs n-1', objective: 'Ensure service carousel photos convey a high-end, welcoming experience.', insight: '1 image shows a staff member out of uniform. Replace to ensure brand compliance.' },
+        { name: 'Carrousel', pct: 85, trend: '+1.5 pts vs last month', objective: 'Ensure service carousel photos convey a high-end, welcoming experience.', insight: '1 image shows a staff member out of uniform. Replace to ensure brand compliance.' },
       ] },
-    { name: 'Suite',         pct: 62, trend: '+1.0 pts vs n-1', objective: 'Evaluate suite photography for premium positioning, resolution and brand compliance.', insight: '2 Carrousel images are below the 3700px minimum resolution. A professional reshoot is recommended.',
+    { name: 'Suite',         pct: 62, trend: '+1.0 pts vs last month', objective: 'Evaluate suite photography for premium positioning, resolution and brand compliance.', insight: '2 Carrousel images are below the 3700px minimum resolution. A professional reshoot is recommended.',
       sub: [
-        { name: 'Carrousel', pct: 62, trend: '+1.0 pts vs n-1', objective: 'Ensure suite carousel images convey the premium experience at the required resolution.', insight: '2 images are below the 3700px minimum. Reshoot the bathroom and view angles at full resolution.' },
+        { name: 'Carrousel', pct: 62, trend: '+1.0 pts vs last month', objective: 'Ensure suite carousel images convey the premium experience at the required resolution.', insight: '2 images are below the 3700px minimum. Reshoot the bathroom and view angles at full resolution.' },
       ] },
   ],
 ]
@@ -465,11 +456,6 @@ function ActivityDrawer({ open, onClose }) {
                   </div>
                 </div>
 
-                {/* Warning icon */}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={level.main} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}>
-                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                  <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-                </svg>
               </div>
             )
           })}
@@ -488,11 +474,116 @@ const TABS_META = [
 ]
 
 
+// ─── Onboarding popup ────────────────────────────────────────────────────────
+function OnboardingPopup({ onClose }) {
+  return (
+    <>
+      {/* Backdrop */}
+      <div onClick={onClose} style={{
+        position: 'fixed', inset: 0, background: 'rgba(5,0,51,0.4)',
+        zIndex: 2000, backdropFilter: 'blur(2px)',
+      }} />
+
+      {/* Modal */}
+      <div style={{
+        position: 'fixed', top: '50%', left: '50%',
+        transform: 'translate(-50%, -50%)',
+        zIndex: 2001, width: 520,
+        background: 'white', borderRadius: 16,
+        boxShadow: '0 24px 64px rgba(5,0,51,0.18)',
+        overflow: 'hidden',
+      }}>
+        {/* Top accent bar */}
+        <div style={{ height: 4, background: 'linear-gradient(90deg, #2D4CD5, #4ECDA8)' }} />
+
+        <div style={{ padding: '32px 36px 36px' }}>
+          {/* Header */}
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20 }}>
+            <div>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#2D4CD5', borderRadius: 4, padding: '4px 12px', marginBottom: 12 }}>
+                <span style={{ fontSize: 12, fontWeight: 600, color: 'white', fontFamily: 'Inter, sans-serif', letterSpacing: 0.3 }}>NEW FEATURE</span>
+              </div>
+              <h2 style={{ fontSize: 22, fontWeight: 700, color: '#050033', margin: 0, fontFamily: 'Montserrat, sans-serif', lineHeight: 1.3 }}>
+                Meet your new<br />Content Dashboard
+              </h2>
+              <p style={{ fontSize: 16, color: '#5E5B73', margin: '6px 0 0', fontFamily: 'Roboto, sans-serif' }}>
+                Your content, scored. Your actions, clear.
+              </p>
+            </div>
+            <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#9CA3AF', flexShrink: 0, marginTop: -4 }}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M12 4L4 12M4 4L12 12" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+            </button>
+          </div>
+
+          {/* Body */}
+          <p style={{ fontSize: 14, color: '#5E5B73', margin: '0 0 20px', lineHeight: 1.7, fontFamily: 'Roboto, sans-serif' }}>
+            We've built a smarter way to manage your hotel content. Your dashboard now gives you <strong style={{ color: '#232136' }}>3 key scores</strong> so you always know where you stand.
+          </p>
+
+          {/* 3 features */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 28 }}>
+            {[
+              { color: '#2D4CD5', label: 'Live scores', desc: 'Content completion, Photo completion & Photo quality — updated in real time.',
+                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/>
+                </svg> },
+              { color: '#DC2626', label: 'Critical gaps', desc: 'Your lowest-performing KPIs are surfaced automatically, no digging required.',
+                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="12"/><line x1="11" y1="16" x2="11.01" y2="16"/>
+                </svg> },
+              { color: '#4ECDA8', label: 'Concrete improvements', desc: 'Every underperforming KPI comes with a clear, actionable tip to fix it fast.',
+                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/>
+                  <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
+                </svg> },
+            ].map(({ color, label, desc, icon }) => (
+              <div key={label} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                <span style={{ width: 36, height: 36, borderRadius: 10, background: color + '18', color, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  {icon}
+                </span>
+                <div>
+                  <p style={{ fontSize: 14, fontWeight: 600, color: '#232136', margin: '0 0 2px', fontFamily: 'Roboto, sans-serif' }}>{label}</p>
+                  <p style={{ fontSize: 13, color: '#5E5B73', margin: 0, fontFamily: 'Roboto, sans-serif', lineHeight: 1.5 }}>{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <button
+            onClick={onClose}
+            style={{
+              width: '100%', padding: '13px 0', borderRadius: 8, border: 'none',
+              background: '#050033', color: 'white', fontSize: 15, fontWeight: 600,
+              fontFamily: 'Inter, sans-serif', cursor: 'pointer', letterSpacing: 0.2,
+              transition: 'opacity 0.15s',
+            }}
+            onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
+            onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+          >
+            Start exploring your scores →
+          </button>
+        </div>
+      </div>
+    </>
+  )
+}
+
 // ─── Dashboard Page ───────────────────────────────────────────────────────────
 export default function DashboardPage() {
   const [activeTab, setActiveTab]     = useState(0)
   const [selectedKpi, setSelectedKpi] = useState(null)
   const [expandedKpi, setExpandedKpi] = useState(null)
+  const [showOnboarding, setShowOnboarding] = useState(
+    () => !localStorage.getItem('hcm-dashboard-seen')
+  )
+
+  function closeOnboarding() {
+    localStorage.setItem('hcm-dashboard-seen', '1')
+    setShowOnboarding(false)
+  }
   const [search, setSearch]           = useState('')
   const [sortBy, setSortBy]           = useState('alpha')
   const [hoveredTab, setHoveredTab]   = useState(null)
@@ -546,15 +637,15 @@ export default function DashboardPage() {
         <Card style={{ display: 'flex', flexDirection: 'column' }}>
           <div>
             <CardTitle scoreType="global">Your total Score</CardTitle>
-            <p style={{ fontSize: 14, fontWeight: 400, color: '#5E5B73', margin: '0 0 0', fontFamily: 'Roboto, sans-serif' }}>Updated on 12/02/2026</p>
+            <p style={{ fontSize: 14, fontWeight: 400, color: '#898C8E', margin: '0 0 0', fontFamily: 'Roboto, sans-serif' }}>Updated on 12/02/2026</p>
           </div>
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 24 }}>
             <SemiGauge pct={77.5} trend="+ 0.2 pts vs last month" />
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                <p style={{ fontSize: 18, fontWeight: 700, color: '#1A1835', margin: 0 }}>Good progress!</p>
+                <p style={{ fontSize: 18, fontWeight: 500, color: '#1A1835', margin: 0, fontFamily: 'Roboto, sans-serif' }}>Good progress!</p>
               </div>
-              <p style={{ fontSize: 14, color: '#6B7280', margin: 0, lineHeight: 1.5 }}>Your score is above average. A few quick actions can boost it</p>
+              <p style={{ fontSize: 14, color: '#6B7280', margin: 0, lineHeight: 1.5 }}>Your score is above average — you're on the right track. A few targeted actions on your weakest KPIs could push you into the Excellence range.</p>
             </div>
           </div>
         </Card>
@@ -632,7 +723,7 @@ export default function DashboardPage() {
               <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8 }}>
                 {!tab.stars && (
                   <>
-                    <p style={{ fontSize: 20, fontWeight: 700, color: '#1A1835', margin: 0 }}>{tab.pct} %</p>
+                    <p style={{ fontSize: 22, fontWeight: 700, color: '#1A1835', margin: 0 }}>{tab.pct} %</p>
                     <ScoreBadge score={tab.pct} size="sm" />
                   </>
                 )}
@@ -641,7 +732,7 @@ export default function DashboardPage() {
                 {tab.stars ? (
                   <>
                     <Stars value={tab.starValue} />
-                    <span style={{ fontSize: 20, fontWeight: 700, color: '#1A1835' }}>{tab.starValue} / 5</span>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: '#1A1835' }}>{tab.starValue} / 5</span>
                     <ScoreBadge score={tab.pct} size="sm" />
                   </>
                 ) : (
@@ -736,7 +827,7 @@ export default function DashboardPage() {
                         <polyline points="6 9 12 15 18 9"/>
                       </svg>
 
-                      <span style={{ fontSize: 14, color: isSelected ? '#2D4CD5' : '#374151', fontWeight: isSelected ? 600 : 400, minWidth: 130 }}>
+                      <span style={{ fontSize: 14, color: isSelected ? '#2D4CD5' : '#374151', fontWeight: isSelected ? 600 : 400, ...(activeTab === 0 ? { width: 170, flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' } : { minWidth: 130 }) }}>
                         {kpi.name}
                       </span>
 
@@ -744,7 +835,7 @@ export default function DashboardPage() {
                         ? <span style={{ fontSize: 13, color: '#9CA3AF', flex: 1 }}>Empty</span>
                         : activeTab === 2
                           ? <Stars value={kpi.pct / 20} size={16} />
-                          : <ScoreGauge pct={kpi.pct} />
+                          : <ScoreGauge pct={kpi.pct} width={activeTab === 0 ? 120 : undefined} />
                       }
 
                       <span style={{ fontSize: 14, fontWeight: 600, color: isSelected ? '#2D4CD5' : '#374151', minWidth: 40, textAlign: 'right' }}>
@@ -799,8 +890,8 @@ export default function DashboardPage() {
                                   <svg width="10" height="10" viewBox="0 0 10 10" style={{ flexShrink: 0 }}>
                                     <circle cx="5" cy="5" r="3" fill={isSubSelected ? '#2D4CD5' : '#C4C4D4'} />
                                   </svg>
-                                  <span style={{ fontSize: 13, color: isSubSelected ? '#2D4CD5' : '#5E5B73', fontWeight: isSubSelected ? 600 : 400, minWidth: 106 }}>{s.name}</span>
-                                  {activeTab === 2 ? <Stars value={s.pct / 20} size={16} /> : <ScoreGauge pct={s.pct} />}
+                                  <span style={{ fontSize: 13, color: isSubSelected ? '#2D4CD5' : '#5E5B73', fontWeight: isSubSelected ? 600 : 400, ...(activeTab === 0 ? { width: 146, flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' } : { minWidth: 106 }) }}>{s.name}</span>
+                                  {activeTab === 2 ? <Stars value={s.pct / 20} size={16} /> : <ScoreGauge pct={s.pct} width={activeTab === 0 ? 120 : undefined} />}
                                   <span style={{ fontSize: 13, fontWeight: 500, color: isSubSelected ? '#2D4CD5' : '#5E5B73', minWidth: 40, textAlign: 'right' }}>
                                     {activeTab === 2 ? `${(s.pct / 20).toFixed(1)}` : `${s.pct}%`}
                                   </span>
@@ -827,6 +918,7 @@ export default function DashboardPage() {
       </div>
 
       <ActivityDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
+      {showOnboarding && <OnboardingPopup onClose={closeOnboarding} />}
 
     </div>
   )
