@@ -36,8 +36,8 @@ export const SCORE_LEVELS = [
   {
     name: 'Advanced',
     range: [60, 79] as const,
-    main: '#4EC2CD',
-    bg: '#CFFAFE',
+    main: '#008CE4',
+    bg: '#BEE6FE',
     text: '#164E63',
     cssVarPrefix: 'Score-Avance',
   },

@@ -8,31 +8,62 @@ import { ScoreTooltip } from '../components/ScoreTooltip'
 
 const NAVY = '#050033'
 
-// ─── Donut chart ──────────────────────────────────────────────────────────────
-function DonutChart({ pct, size = 130 }) {
-  const level = getScoreLevel(pct)
-  const strokeW = 11
-  const r = (size - strokeW) / 2
-  const circ = 2 * Math.PI * r
-  const filled = circ * (pct / 100)
-  const cx = size / 2, cy = size / 2
+// ─── Semi-circle segmented gauge (filled = score color, empty = gray) ────────
+function SemiGauge({ pct, size = 260, trend = null }) {
+  const level  = getScoreLevel(pct)
+  const cx     = size / 2
+  const r      = size * 0.43
+  const cy     = r + 8
+  const svgH   = cy + 8
+
+  const N      = 44
+  const segW   = 5
+  const segH   = 14
+  const filled = Math.round((pct / 100) * N)
+
   return (
-    <svg width={size} height={size}>
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke="#E8EDFF" strokeWidth={strokeW} />
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke={level.main} strokeWidth={strokeW}
-        strokeDasharray={`${filled} ${circ}`} strokeLinecap="round"
-        transform={`rotate(-90 ${cx} ${cy})`} />
-      <text x={cx} y={cy} textAnchor="middle" dominantBaseline="central" fill="#232136" fontSize={28} fontWeight={700} fontFamily="Roboto,sans-serif">{String(pct).replace('.', ',')}%</text>
+    <svg width={size} height={svgH} style={{ display: 'block', flexShrink: 0 }}>
+      {Array.from({ length: N }, (_, i) => {
+        const angleRad = Math.PI + ((i + 0.5) / N) * Math.PI
+        const x        = cx + r * Math.cos(angleRad)
+        const y        = cy + r * Math.sin(angleRad)
+        const rotDeg   = (180 + (i + 0.5) / N * 180) - 90
+        return (
+          <rect
+            key={i}
+            x={-segW / 2} y={-segH / 2}
+            width={segW} height={segH} rx={2}
+            fill={i < filled ? level.main : '#E2E5EF'}
+            transform={`translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${rotDeg.toFixed(1)})`}
+          />
+        )
+      })}
+      <text
+        x={cx} y={cy - r * 0.35}
+        textAnchor="middle" dominantBaseline="central"
+        fill="#232136" fontSize={32} fontWeight={700} fontFamily="Montserrat,sans-serif"
+      >
+        {String(pct).replace('.', ',')}%
+      </text>
+      {trend && (
+        <text
+          x={cx} y={cy - r * 0.35 + 34}
+          textAnchor="middle" dominantBaseline="central"
+          fill="#22C55E" fontSize={13} fontWeight={500} fontFamily="Inter,sans-serif"
+        >
+          ▲ {trend}
+        </text>
+      )}
     </svg>
   )
 }
 
 // ─── Stars ────────────────────────────────────────────────────────────────────
-function Stars({ value = 2.5, max = 5 }) {
+function Stars({ value = 2.5, max = 5, size = 22 }) {
   return (
-    <div style={{ display: 'flex', gap: 4 }}>
+    <div style={{ display: 'flex', gap: 3 }}>
       {Array.from({ length: max }).map((_, i) => (
-        <svg key={i} width="22" height="22" viewBox="0 0 24 24">
+        <svg key={i} width={size} height={size} viewBox="0 0 24 24">
           <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
             fill={i < value ? '#F59E0B' : '#E5E7EB'} stroke={i < value ? '#F59E0B' : '#E5E7EB'} strokeWidth="1" />
         </svg>
@@ -275,93 +306,73 @@ const KPIS_BY_TAB = [
   ],
 ]
 
-const ACTIVITY = [
-  { date: '12/09/2026', text: 'You added 3 photos in "Room - Suite"',   delta: '+2%' },
-  { date: '12/09/2026', text: 'You published Dining description',        delta: '+15%' },
-  { date: '12/09/2026', text: 'You fixed 2 low-light images',            delta: '+6%' },
-]
+// ─── Worst entities across all tabs ──────────────────────────────────────────
+const TAB_LABELS = ['Content', 'Media', 'Quality']
 
-const ACTIVITY_BY_TAB = [
-  // Last month
-  [
-    { date: '12/09/2026', text: 'You added 3 photos in "Room - Suite"',              delta: '+2%'  },
-    { date: '12/09/2026', text: 'You published Dining description',                   delta: '+15%' },
-    { date: '10/09/2026', text: 'You fixed 2 low-light images in "Fitness"',          delta: '+6%'  },
-    { date: '08/09/2026', text: 'You updated Hotel general description',               delta: '+4%'  },
-    { date: '05/09/2026', text: 'You added Bar menu content',                          delta: '+8%'  },
-    { date: '02/09/2026', text: 'You uploaded 5 photos in "Restaurant"',               delta: '+3%'  },
-    { date: '28/08/2026', text: 'You completed Bedroom Classic description',           delta: '+11%' },
-    { date: '25/08/2026', text: 'You replaced overexposed photo in "Suite"',           delta: '+2%'  },
-  ],
-  // Last 6 months
-  [
-    { date: '12/09/2026', text: 'You added 3 photos in "Room - Suite"',              delta: '+2%'  },
-    { date: '04/08/2026', text: 'You completed Chef profile section',                  delta: '+18%' },
-    { date: '17/07/2026', text: 'You uploaded 12 photos in "Meeting Room"',            delta: '+9%'  },
-    { date: '29/06/2026', text: 'You published Breakfast description',                 delta: '+7%'  },
-    { date: '10/06/2026', text: 'You fixed white-balance issues in "Bar" photos',      delta: '+4%'  },
-    { date: '22/05/2026', text: 'You added Family amenities content',                  delta: '+12%' },
-    { date: '03/05/2026', text: 'You completed Fitness center description',            delta: '+5%'  },
-    { date: '14/04/2026', text: 'You updated Suite Junior photo carousel',             delta: '+6%'  },
-    { date: '25/03/2026', text: 'You published Golf course description',               delta: '+3%'  },
-  ],
-  // This year
-  [
-    { date: '12/09/2026', text: 'You added 3 photos in "Room - Suite"',              delta: '+2%'  },
-    { date: '04/08/2026', text: 'You completed Chef profile section',                  delta: '+18%' },
-    { date: '17/07/2026', text: 'You uploaded 12 photos in "Meeting Room"',            delta: '+9%'  },
-    { date: '29/06/2026', text: 'You published Breakfast description',                 delta: '+7%'  },
-    { date: '22/05/2026', text: 'You added Family amenities content',                  delta: '+12%' },
-    { date: '14/04/2026', text: 'You updated Suite Junior photo carousel',             delta: '+6%'  },
-    { date: '03/03/2026', text: 'You published Destination overview content',          delta: '+10%' },
-    { date: '18/02/2026', text: 'You completed Business center description',           delta: '+8%'  },
-    { date: '05/01/2026', text: 'You added Anecdote brand storytelling content',       delta: '+14%' },
-    { date: '12/01/2026', text: 'You replaced 4 non-compliant bedroom photos',        delta: '+5%'  },
-  ],
-]
+const WORST_ENTITIES = (() => {
+  const all = []
+  KPIS_BY_TAB.forEach((tab, tabIdx) => {
+    tab.forEach(kpi => {
+      all.push({ name: kpi.name, pct: kpi.pct, tab: TAB_LABELS[tabIdx], parent: null, insight: kpi.insight })
+      kpi.sub?.forEach(s => {
+        all.push({ name: s.name, pct: s.pct, tab: TAB_LABELS[tabIdx], parent: kpi.name, insight: s.insight })
+      })
+    })
+  })
+  const seen = new Set()
+  const deduped = []
+  for (const item of all.sort((a, b) => a.pct - b.pct)) {
+    const key = `${item.tab}|${item.parent ?? ''}|${item.name}`
+    if (!seen.has(key)) { seen.add(key); deduped.push(item) }
+  }
+  return deduped.slice(0, 4)
+})()
 
-// ─── Activity Drawer ──────────────────────────────────────────────────────────
+// ─── Drawer: entities per tab sorted by score asc ────────────────────────────
 const DRAWER_TABS = [
-  { label: 'Last month',    count: 8  },
-  { label: 'Last 6 months', count: 9  },
-  { label: 'This year',     count: 10 },
+  { label: 'Content completion', tabIdx: 0 },
+  { label: 'Photos completion',  tabIdx: 1 },
+  { label: 'Quality score',      tabIdx: 2 },
 ]
 
+const DRAWER_ENTITIES_BY_TAB = KPIS_BY_TAB.map(tab => {
+  const all = []
+  tab.forEach(kpi => {
+    all.push({ name: kpi.name, pct: kpi.pct, parent: null, insight: kpi.insight })
+    kpi.sub?.forEach(s => {
+      all.push({ name: s.name, pct: s.pct, parent: kpi.name, insight: s.insight })
+    })
+  })
+  return all.sort((a, b) => a.pct - b.pct)
+})
+
+// ─── Attention Drawer ─────────────────────────────────────────────────────────
 function ActivityDrawer({ open, onClose }) {
   const [activeTab, setActiveTab] = useState(0)
+  const entities = DRAWER_ENTITIES_BY_TAB[activeTab]
 
   return (
     <>
-      {/* Overlay */}
       {open && (
         <div
           onClick={onClose}
-          style={{
-            position: 'fixed', inset: 0,
-            background: 'rgba(5, 0, 51, 0.32)',
-            zIndex: 1000,
-          }}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(5, 0, 51, 0.32)', zIndex: 1000 }}
         />
       )}
 
-      {/* Panel */}
-      <div
-        style={{
-          position: 'fixed', top: 0, right: 0, bottom: 0,
-          width: 673,
-          background: 'white',
-          zIndex: 1001,
-          display: 'flex', flexDirection: 'column',
-          transform: open ? 'translateX(0)' : 'translateX(100%)',
-          transition: 'transform 0.32s cubic-bezier(0.4, 0, 0.2, 1)',
-          boxShadow: '-4px 0 32px rgba(5,0,51,0.12)',
-        }}
-      >
+      <div style={{
+        position: 'fixed', top: 0, right: 0, bottom: 0,
+        width: 673, background: 'white', zIndex: 1001,
+        display: 'flex', flexDirection: 'column',
+        transform: open ? 'translateX(0)' : 'translateX(100%)',
+        transition: 'transform 0.32s cubic-bezier(0.4, 0, 0.2, 1)',
+        boxShadow: '-4px 0 32px rgba(5,0,51,0.12)',
+      }}>
         {/* Header */}
         <div style={{ flexShrink: 0 }}>
           <div style={{ padding: '24px 28px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <h2 style={{ fontSize: 20, fontWeight: 500, color: '#232136', margin: 0, fontFamily: 'Roboto, sans-serif' }}>
-              Recent activities
+              Critical Gaps
             </h2>
             <button
               onClick={onClose}
@@ -375,7 +386,6 @@ function ActivityDrawer({ open, onClose }) {
             </button>
           </div>
 
-          {/* Tabs */}
           <div style={{ height: 1, background: '#D9DADC' }} />
           <div style={{ display: 'flex', gap: 0, padding: '0 28px', borderBottom: '1px solid #DADADD' }}>
             {DRAWER_TABS.map((tab, i) => (
@@ -389,9 +399,7 @@ function ActivityDrawer({ open, onClose }) {
                   color: activeTab === i ? '#252339' : '#5E5B73',
                   fontFamily: 'Inter, sans-serif',
                   borderBottom: activeTab === i ? '2px solid #252339' : '2px solid transparent',
-                  marginBottom: -1,
-                  whiteSpace: 'nowrap',
-                  transition: 'color 0.15s',
+                  marginBottom: -1, whiteSpace: 'nowrap', transition: 'color 0.15s',
                 }}
               >
                 {tab.label}
@@ -400,40 +408,55 @@ function ActivityDrawer({ open, onClose }) {
                   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                   background: activeTab === i ? '#EEF0FB' : '#F3F4F6',
                   color: activeTab === i ? '#2D4CD5' : '#6B7280',
-                  borderRadius: 10,
-                  padding: '1px 7px',
-                  fontSize: 12, fontWeight: 500,
+                  borderRadius: 10, padding: '1px 7px', fontSize: 12, fontWeight: 500,
                 }}>
-                  {tab.count}
+                  {DRAWER_ENTITIES_BY_TAB[i].length}
                 </span>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Activity list */}
+        {/* Entity list */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '8px 28px 28px' }}>
-          {/* Column headers */}
-          <div style={{ display: 'grid', gridTemplateColumns: '100px 1fr 60px', gap: 12, padding: '16px 0 8px', borderBottom: '1px solid #EBEBF5', marginBottom: 4 }}>
-            <span style={{ fontSize: 12, fontWeight: 600, color: '#9CA3AF', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Date</span>
-            <span style={{ fontSize: 12, fontWeight: 600, color: '#9CA3AF', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Activity</span>
-            <span style={{ fontSize: 12, fontWeight: 600, color: '#9CA3AF', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'right' }}>Impact</span>
-          </div>
+          {entities.map((e, i) => {
+            const level = getScoreLevel(e.pct)
+            return (
+              <div
+                key={i}
+                style={{
+                  display: 'flex', alignItems: 'flex-start', gap: 14,
+                  padding: '14px 0',
+                  borderBottom: i < entities.length - 1 ? '1px solid #F3F4F6' : 'none',
+                }}
+              >
+                {/* Score pill */}
+                <span style={{
+                  flexShrink: 0, minWidth: 44, textAlign: 'center',
+                  fontSize: 12, fontWeight: 700, color: level.text,
+                  background: level.bg, borderRadius: 4, padding: '3px 7px', marginTop: 1,
+                }}>
+                  {e.pct}%
+                </span>
 
-          {ACTIVITY_BY_TAB[activeTab].map((a, i) => (
-            <div
-              key={i}
-              style={{
-                display: 'grid', gridTemplateColumns: '100px 1fr 60px', gap: 12,
-                padding: '14px 0',
-                borderBottom: i < ACTIVITY_BY_TAB[activeTab].length - 1 ? '1px solid #F3F4F6' : 'none',
-                alignItems: 'flex-start',
-              }}
-            >
-              <span style={{ fontSize: 14, fontWeight: 500, color: '#5E5B73', fontFamily: 'Roboto, sans-serif' }}>{a.date}</span>
-              <span style={{ fontSize: 14, fontWeight: 400, color: '#38364D', fontFamily: 'Roboto, sans-serif', lineHeight: 1.45 }}>{a.text}</span>
-            </div>
-          ))}
+                {/* Name + insight */}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: '#232136', fontFamily: 'Roboto, sans-serif', marginBottom: 4 }}>
+                    {e.parent ? `${e.parent} › ${e.name}` : e.name}
+                  </div>
+                  <div style={{ fontSize: 13, color: '#5E5B73', fontFamily: 'Roboto, sans-serif', lineHeight: 1.5 }}>
+                    {e.insight}
+                  </div>
+                </div>
+
+                {/* Warning icon */}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={level.main} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}>
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </div>
+            )
+          })}
         </div>
       </div>
     </>
@@ -498,7 +521,7 @@ export default function DashboardPage() {
       {/* Page header */}
       <div style={{ marginBottom: 28 }}>
         <h1 style={{ fontSize: 28, fontWeight: 700, color: NAVY, margin: 0 }}>Dashboard</h1>
-        <p style={{ fontSize: 15, color: '#6B7280', margin: '6px 0 0' }}>Pilot all your content with data and insights</p>
+        <p style={{ fontSize: 15, color: '#6B7280', margin: '6px 0 0' }}>Stay on top of your text and photo content with live scores, gap analysis and improvement insights.</p>
       </div>
 
       {/* Row 1 : Score + Recent activity */}
@@ -510,38 +533,53 @@ export default function DashboardPage() {
             <p style={{ fontSize: 14, fontWeight: 400, color: '#5E5B73', margin: '0 0 0', fontFamily: 'Roboto, sans-serif' }}>Updated on 12/02/2026</p>
           </div>
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 24 }}>
-            <DonutChart pct={77.5} size={130} />
+            <SemiGauge pct={77.5} trend="+ 0.2 pts vs last month" />
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                 <p style={{ fontSize: 18, fontWeight: 700, color: '#1A1835', margin: 0 }}>Good progress!</p>
-                <ScoreBadge score={77.5} size="sm" />
               </div>
-              <p style={{ fontSize: 14, color: '#6B7280', margin: '0 0 12px', lineHeight: 1.5 }}>Your score is above average. A few quick actions can boost it</p>
-              <Trend label="+ 0.2 pts vs last month" />
+              <p style={{ fontSize: 14, color: '#6B7280', margin: 0, lineHeight: 1.5 }}>Your score is above average. A few quick actions can boost it</p>
             </div>
           </div>
         </Card>
 
         <Card>
-          <CardTitle>Recent activity</CardTitle>
-          <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column' }}>
-            {ACTIVITY.map((a, i) => (
-              <div key={i}>
-                {i > 0 && <div style={{ height: 1, background: '#F3F4F6' }} />}
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '10px 0' }}>
-                  <span style={{ fontSize: 12, color: '#9CA3AF', whiteSpace: 'nowrap', paddingTop: 1, minWidth: 74 }}>{a.date}</span>
-                  <span style={{ fontSize: 13, color: '#374151', flex: 1, lineHeight: 1.4 }}>{a.text}</span>
+          <CardTitle>Critical Gaps</CardTitle>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {WORST_ENTITIES.map((e, i) => {
+              const level = getScoreLevel(e.pct)
+              return (
+                <div key={i} style={{
+                  display: 'flex', alignItems: 'center', gap: 10,
+                  padding: '9px 0',
+                  borderBottom: i < WORST_ENTITIES.length - 1 ? '1px solid #F3F4F6' : 'none',
+                }}>
+                  {/* Score pill */}
+                  <span style={{
+                    flexShrink: 0, minWidth: 40, textAlign: 'center',
+                    fontSize: 12, fontWeight: 700, color: level.text,
+                    background: level.bg, borderRadius: 4, padding: '2px 6px',
+                  }}>
+                    {e.pct}%
+                  </span>
+                  {/* Name + category */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 13, fontWeight: 500, color: '#232136', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {e.parent ? `${e.parent} › ${e.name}` : e.name}
+                    </div>
+                    <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 1 }}>{e.tab}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
           <button
             onClick={() => setDrawerOpen(true)}
-            style={{ marginTop: 20, background: 'none', border: 'none', cursor: 'pointer', color: '#0051AE', fontSize: 13, fontWeight: 500, display: 'flex', alignItems: 'center', gap: 4, padding: 0, transition: 'opacity 0.15s' }}
+            style={{ marginTop: 16, background: 'none', border: 'none', cursor: 'pointer', color: '#0051AE', fontSize: 13, fontWeight: 500, display: 'flex', alignItems: 'center', gap: 4, padding: 0, transition: 'opacity 0.15s' }}
             onMouseEnter={e => e.currentTarget.style.opacity = '0.65'}
             onMouseLeave={e => e.currentTarget.style.opacity = '1'}
           >
-            View all activity
+            View more
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0051AE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
         </Card>
@@ -563,35 +601,42 @@ export default function DashboardPage() {
               style={{
                 padding: 24, cursor: 'pointer',
                 background: active ? 'white' : hoveredTab === i ? '#F0F2FC' : '#F7F9FB',
-                borderTop: active ? '3px solid #2D4CD5' : hoveredTab === i ? '3px solid #B0BEFF' : '3px solid transparent',
+                borderTop: '3px solid transparent',
                 borderRight: i < 2 ? '1px solid #EBEBF5' : 'none',
                 borderBottom: active ? 'none' : '1px solid #EBEBF5',
                 position: 'relative', zIndex: active ? 1 : 0,
                 marginBottom: active ? -1 : 0,
                 display: 'flex', flexDirection: 'column',
-                transition: 'background 0.15s, border-top-color 0.15s',
+                transition: 'background 0.15s',
               }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 }}>
+              <div style={{ marginBottom: 4 }}>
                 <CardTitle scoreType={tab.scoreType} tooltipPlacement={tab.tooltipPlacement}>{tab.title}</CardTitle>
-                <ScoreBadge score={tab.pct} size="sm" />
               </div>
               <SubLabel>Updated on 12/02/2026</SubLabel>
-              <div style={{ flex: 1, display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 8 }}>
-                {tab.stars ? (
-                  <span style={{ fontSize: 18, fontWeight: 700, color: '#1A1835' }}>{tab.starValue} / 5</span>
-                ) : (
+              <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8 }}>
+                {!tab.stars && (
                   <>
-                    <p style={{ fontSize: 26, fontWeight: 700, color: '#1A1835', margin: 0 }}>{tab.pct} %</p>
-                    <Trend label={tab.trend} />
+                    <p style={{ fontSize: 20, fontWeight: 700, color: '#1A1835', margin: 0 }}>{tab.pct} %</p>
+                    <ScoreBadge score={tab.pct} size="sm" />
                   </>
                 )}
               </div>
-              <div style={{ marginTop: 12 }}>
-                {tab.stars
-                  ? <Stars value={tab.starValue} />
-                  : <ScoreGauge pct={tab.pct} />
-                }
+              <div style={{ marginTop: 2, transform: tab.stars ? 'translateY(-10px)' : 'translateY(4px)', display: 'flex', alignItems: 'center', gap: 10 }}>
+                {tab.stars ? (
+                  <>
+                    <Stars value={tab.starValue} />
+                    <span style={{ fontSize: 20, fontWeight: 700, color: '#1A1835' }}>{tab.starValue} / 5</span>
+                    <ScoreBadge score={tab.pct} size="sm" />
+                  </>
+                ) : (
+                  <ScoreGauge pct={tab.pct} />
+                )}
               </div>
+              {tab.trend && (
+                <div style={{ marginTop: 8 }}>
+                  <Trend label={tab.trend} />
+                </div>
+              )}
             </div>
           )
         })}
@@ -600,7 +645,7 @@ export default function DashboardPage() {
         <div style={{ gridColumn: 'span 2', borderTop: '1px solid #EBEBF5', borderRight: '1px solid #EBEBF5', minWidth: 0 }}>
 
             {/* Toolbar */}
-            <div style={{ padding: '14px 24px', borderBottom: '1px solid #F3F4F6', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+            <div style={{ padding: '30px 24px 14px', borderBottom: '1px solid #F3F4F6', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
               <p style={{ fontSize: 13, color: '#6B7280', margin: 0 }}>Click on each row to view details.</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
 
@@ -681,7 +726,9 @@ export default function DashboardPage() {
 
                       {kpi.empty
                         ? <span style={{ fontSize: 13, color: '#9CA3AF', flex: 1 }}>Empty</span>
-                        : <ScoreGauge pct={kpi.pct} />
+                        : activeTab === 2
+                          ? <Stars value={kpi.pct / 20} size={16} />
+                          : <ScoreGauge pct={kpi.pct} />
                       }
 
                       <span style={{ fontSize: 14, fontWeight: 600, color: isSelected ? '#2D4CD5' : '#374151', minWidth: 40, textAlign: 'right' }}>
@@ -737,7 +784,7 @@ export default function DashboardPage() {
                                     <circle cx="5" cy="5" r="3" fill={isSubSelected ? '#2D4CD5' : '#C4C4D4'} />
                                   </svg>
                                   <span style={{ fontSize: 13, color: isSubSelected ? '#2D4CD5' : '#5E5B73', fontWeight: isSubSelected ? 600 : 400, minWidth: 106 }}>{s.name}</span>
-                                  <ScoreGauge pct={s.pct} />
+                                  {activeTab === 2 ? <Stars value={s.pct / 20} size={16} /> : <ScoreGauge pct={s.pct} />}
                                   <span style={{ fontSize: 13, fontWeight: 500, color: isSubSelected ? '#2D4CD5' : '#5E5B73', minWidth: 40, textAlign: 'right' }}>
                                     {activeTab === 2 ? `${(s.pct / 20).toFixed(1)}` : `${s.pct}%`}
                                   </span>

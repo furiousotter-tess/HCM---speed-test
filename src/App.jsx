@@ -235,7 +235,7 @@ const NAV = [
   { key: 'documents',  icon: <IconDocuments />, label: 'Documents' },
 ]
 
-function Sidebar({ page, setPage }) {
+function Sidebar({ page, setPage, hotelSelected }) {
   return (
     <aside style={{
       position: 'fixed', top: HEADER_H, left: 0, bottom: 0, zIndex: 100,
@@ -246,19 +246,23 @@ function Sidebar({ page, setPage }) {
       <div style={{ padding: '17px 14px', display: 'flex', flexDirection: 'column', gap: 16 }}>
         {NAV.map(item => {
           const active = page === item.key
+          const disabled = !hotelSelected && item.key !== 'home'
           return (
             <button
               key={item.key}
-              onClick={() => setPage(item.key)}
+              onClick={() => { if (!disabled) setPage(item.key) }}
               title={item.label}
+              disabled={disabled}
               style={{
-                width: 40, height: 40, borderRadius: 6, border: 'none', cursor: 'pointer',
+                width: 40, height: 40, borderRadius: 6, border: 'none',
+                cursor: disabled ? 'not-allowed' : 'pointer',
                 background: active ? '#F3EFFF' : 'transparent',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 transition: 'background 0.15s, box-shadow 0.15s',
+                opacity: disabled ? 0.35 : 1,
               }}
-              onMouseEnter={e => { if (!active) e.currentTarget.style.background = '#F7F5FF' }}
-              onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'transparent' }}
+              onMouseEnter={e => { if (!active && !disabled) e.currentTarget.style.background = '#F7F5FF' }}
+              onMouseLeave={e => { if (!active && !disabled) e.currentTarget.style.background = 'transparent' }}
             >
               {item.icon}
             </button>
@@ -318,9 +322,7 @@ function HomePage({ selectedHotelId, onSelectHotel }) {
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
   const [page, setPage] = useState('home')
-  const [selectedHotelId, setSelectedHotelId] = useState(
-    HOTELS.find(h => h.selected)?.id ?? HOTELS[0].id
-  )
+  const [selectedHotelId, setSelectedHotelId] = useState(null)
   const [selectedElement, setSelectedElement] = useState(null)
 
   const selectedHotel = HOTELS.find(h => h.id === selectedHotelId) ?? null
@@ -339,7 +341,7 @@ export default function App() {
     <div style={{ minHeight: '100vh', background: 'white', fontFamily: 'Inter, sans-serif' }}>
       <Toaster position="bottom-right" richColors />
       <Header selectedHotel={selectedHotel} />
-      <Sidebar page={page} setPage={setPage} />
+      <Sidebar page={page} setPage={setPage} hotelSelected={!!selectedHotel} />
       <main style={{ marginLeft: SIDEBAR_W, marginTop: HEADER_H }}>
         {page === 'description' ? <DetailsPage element={selectedElement} onBack={handleBackFromDescription} />
           : page === 'overview'  ? <OverviewPage onDescriptionClick={handleDescriptionClick} />

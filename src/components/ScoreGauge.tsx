@@ -9,7 +9,7 @@ interface ScoreGaugeProps {
  * Horizontal progress bar whose fill color is derived from the score level.
  * Replaces any hardcoded color logic — just pass the score percentage.
  */
-export function ScoreGauge({ pct, height = 6 }: ScoreGaugeProps) {
+export function ScoreGauge({ pct, height = 8 }: ScoreGaugeProps) {
   const level = getScoreLevel(pct)
 
   return (
