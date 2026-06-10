@@ -14,7 +14,7 @@ function SemiGauge({ pct, size = 260, trend = null }) {
   const cx     = size / 2
   const r      = size * 0.43
   const cy     = r + 8
-  const svgH   = cy + 8
+  const svgH   = cy + 32
 
   const N      = 44
   const segW   = 5
@@ -38,8 +38,24 @@ function SemiGauge({ pct, size = 260, trend = null }) {
           />
         )
       })}
+      {/* Status badge above score */}
+      {(() => {
+        const badgeY  = cy - r * 0.5 + 38
+        const pillW   = 96
+        const pillH   = 22
+        return (
+          <g>
+            <rect x={cx - pillW / 2} y={badgeY - pillH / 2} width={pillW} height={pillH} rx={11} fill={level.bg} />
+            <circle cx={cx - pillW / 2 + 14} cy={badgeY} r={4} fill={level.main} />
+            <text x={cx - pillW / 2 + 22} y={badgeY} dominantBaseline="central"
+              fill={level.text} fontSize={12} fontWeight={500} fontFamily="Roboto,sans-serif">
+              {level.name}
+            </text>
+          </g>
+        )
+      })()}
       <text
-        x={cx} y={cy - r * 0.35}
+        x={cx} y={cy - r * 0.5}
         textAnchor="middle" dominantBaseline="central"
         fill="#232136" fontSize={32} fontWeight={700} fontFamily="Montserrat,sans-serif"
       >
@@ -47,7 +63,7 @@ function SemiGauge({ pct, size = 260, trend = null }) {
       </text>
       {trend && (
         <text
-          x={cx} y={cy - r * 0.35 + 34}
+          x={cx} y={cy - r * 0.35 + 50}
           textAnchor="middle" dominantBaseline="central"
           fill="#22C55E" fontSize={13} fontWeight={500} fontFamily="Inter,sans-serif"
         >
