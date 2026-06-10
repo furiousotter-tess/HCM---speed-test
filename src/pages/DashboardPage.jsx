@@ -40,22 +40,18 @@ function SemiGauge({ pct, size = 260, trend = null }) {
         )
       })}
       <text
-        x={cx} y={cy - r * 0.5 + 12}
+        x={cx} y={cy - r * 0.5 + 20}
         textAnchor="middle" dominantBaseline="central"
         fill="#232136" fontSize={32} fontWeight={700} fontFamily="Montserrat,sans-serif"
       >
         {String(pct).replace('.', ',')}%
       </text>
-      {trend && (
-        <text
-          x={cx} y={cy - r * 0.35 + 34}
-          textAnchor="middle" dominantBaseline="central"
-          fill="#22C55E" fontSize={13} fontWeight={500} fontFamily="Inter,sans-serif"
-        >
-          ▲ {trend}
-        </text>
-      )}
     </svg>
+    {trend && (
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: -24 }}>
+        <Trend label={trend} />
+      </div>
+    )}
   </div>
   )
 }
@@ -135,10 +131,10 @@ function KpiDetail({ kpi, isQuality }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <p style={{ fontSize: 18, fontWeight: 500, color: '#38364D', margin: 0, fontFamily: 'Roboto, sans-serif' }}>{kpi.name}</p>
+      <p style={{ fontSize: 16, fontWeight: 700, color: '#38364D', margin: 0, fontFamily: 'Roboto, sans-serif' }}>{kpi.name}</p>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <span style={{ fontSize: 22, fontWeight: 700, color: '#232136' }}>
+        <span style={{ fontSize: 26, fontWeight: 700, color: '#232136' }}>
           {isQuality ? `${(kpi.pct / 20).toFixed(1)} / 5` : `${kpi.pct}%`}
         </span>
         <ScoreBadge score={kpi.pct} size="sm" />
@@ -160,7 +156,7 @@ function KpiDetail({ kpi, isQuality }) {
                 <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
               </svg>
             </span>
-            <span style={{ fontSize: 16, fontWeight: 500, color: '#232136', fontFamily: 'Roboto, sans-serif' }}>Improvement</span>
+            <span style={{ fontSize: 14, fontWeight: 700, color: '#232136', fontFamily: 'Roboto, sans-serif' }}>Improvement</span>
           </div>
           {/* Insight text */}
           <p style={{ fontSize: 14, fontWeight: 400, color: '#5E5B73', margin: 0, lineHeight: 1.6, fontFamily: 'Roboto, sans-serif' }}>
@@ -681,9 +677,9 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
       </div>
 
       {/* Row 1 : Score + Recent activity */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 20, marginBottom: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 0, marginBottom: 20, border: '1px solid transparent' }}>
 
-        <Card style={{ display: 'flex', flexDirection: 'column' }}>
+        <Card style={{ display: 'flex', flexDirection: 'column', marginRight: 20 }}>
           <div>
             <CardTitle scoreType="global">Your total Score</CardTitle>
             <p style={{ fontSize: 14, fontWeight: 400, color: '#898C8E', margin: '0 0 0', fontFamily: 'Roboto, sans-serif' }}>Updated on 12/02/2026</p>
