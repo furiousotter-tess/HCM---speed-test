@@ -164,13 +164,13 @@ function KpiDetail({ kpi, isQuality }) {
             {kpi.insight}
           </p>
         </div>
-        {/* Enhance now link */}
+        {/* Improve now link */}
         <a href="#" onClick={e => e.preventDefault()}
           style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#0051AE', fontSize: 14, fontWeight: 400, textDecoration: 'none', transition: 'opacity 0.15s', fontFamily: 'Roboto, sans-serif' }}
           onMouseEnter={e => e.currentTarget.style.opacity = '0.65'}
           onMouseLeave={e => e.currentTarget.style.opacity = '1'}
         >
-          Enhance now
+          Improve it
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0051AE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="9 18 15 12 9 6"/>
           </svg>

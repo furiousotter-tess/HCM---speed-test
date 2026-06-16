@@ -215,7 +215,6 @@ function RoomDescriptionDrawer({ open, onClose, onConfirm }) {
 
               {/* Opportunity card */}
               <div style={{ background: '#F7F5FF', borderRadius: 6, padding: '16px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <span style={{ fontSize: 14, fontWeight: 500, color: '#002EB9', fontFamily: 'Roboto, sans-serif' }}>+ 2 %</span>
                 <span style={{ fontSize: 16, fontWeight: 500, color: '#232136', fontFamily: 'Roboto, sans-serif' }}>Room description</span>
                 <p style={{ fontSize: 16, fontWeight: 400, color: '#38364D', margin: 0, lineHeight: 1.6, fontFamily: 'Roboto, sans-serif' }}>
                   Your description is too short. Enter a score of at least 102 characters to achieve an excellent score in your referent language (English).

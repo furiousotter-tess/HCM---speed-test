@@ -438,6 +438,11 @@ export default function OverviewPage({ onDescriptionClick }) {
       (activeStatuses.includes('Published') && el.published) ||
       (activeStatuses.includes('Publications in progress') && !el.published)
     return matchSearch && matchCat && matchStatus
+  }).sort((a, b) => {
+    if (sortBy === 'content-asc') return a.content - b.content
+    if (sortBy === 'photos-asc')  return a.photos  - b.photos
+    if (sortBy === 'quality-asc') return a.quality  - b.quality
+    return a.name.localeCompare(b.name) // alpha (default)
   })
 
   return (
@@ -522,8 +527,9 @@ export default function OverviewPage({ onDescriptionClick }) {
                 style={{ appearance: 'none', border: '1px solid #DDDDE8', borderRadius: 6, padding: '6px 32px 6px 32px', fontSize: 13, color: '#374151', background: 'white', cursor: 'pointer', fontFamily: 'Inter, sans-serif', outline: 'none' }}
               >
                 <option value="alpha">A → Z</option>
-                <option value="score-desc">Score: High to Low</option>
-                <option value="score-asc">Score: Low to High</option>
+                <option value="content-asc">Content score : low to high</option>
+                <option value="photos-asc">Photo score : low to high</option>
+                <option value="quality-asc">Quality : low to high</option>
               </select>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                 style={{ position: 'absolute', right: 10, pointerEvents: 'none' }}>
