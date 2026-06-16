@@ -21,7 +21,7 @@ const HOTELS = [
     name: 'Hôtel Mercure Paris Tour Eiffel Grenelle',
     updated: 'Updated on 12/02/2026',
     score: 48,
-    img: 'url(https://images.trvl-media.com/lodging/94000000/93520000/93518700/93518690/e94b74ee.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill)',
+    img: 'url(https://www.ahstatic.com/photos/1598_ho_00_p_1024x768.jpg)',
   },
   {
     id: 2, selected: false,
@@ -347,6 +347,7 @@ export default function App() {
   function handleSelectHotel(id) {
     setSelectedHotelId(id)
     setPage('score')
+    setShowOnboarding(true)
   }
 
   return (

@@ -24,7 +24,7 @@ const FILTER_CATEGORIES = [
   'Parking',
 ]
 
-const FILTER_STATUSES = ['Published', 'Last modification non published']
+const FILTER_STATUSES = ['Published', 'Publications in progress']
 
 // Scores corrélés aux données Dashboard :
 // content → Tab 0, photos → Tab 1 (Media), quality → Tab 2 (Photo Quality)
@@ -32,10 +32,14 @@ const HO0 = 'https://www.ahstatic.com/photos/1598_ho_00_p_1024x768.jpg'
 const HO1 = 'https://www.ahstatic.com/photos/1598_ho_01_p_1024x768.jpg'
 const HO2 = 'https://www.ahstatic.com/photos/1598_ho_02_p_1024x768.jpg'
 const HO3 = 'https://www.ahstatic.com/photos/1598_ho_03_p_1024x768.jpg'
-const BR  = 'https://www.ahstatic.com/photos/1598_br_00_p_1024x768.jpg'
+const HO4 = 'https://www.ahstatic.com/photos/1598_ho_04_p_1024x768.jpg'
+const HO5 = 'https://www.ahstatic.com/photos/1598_ho_05_p_1024x768.jpg'
+const BR0 = 'https://www.ahstatic.com/photos/1598_br_00_p_1024x768.jpg'
+const BR1 = 'https://www.ahstatic.com/photos/1598_br_01_p_1024x768.jpg'
+const BR2 = 'https://www.ahstatic.com/photos/1598_br_02_p_1024x768.jpg'
+const BR3 = 'https://www.ahstatic.com/photos/1598_br_03_p_1024x768.jpg'
+const BR4 = '/breakfast-type.jpg'
 const BAB = 'https://www.ahstatic.com/photos/1598_bab002_00_p_1024x768.jpg'
-const FI  = 'https://www.ahstatic.com/photos/1598_fi_00_p_1024x768.jpg'
-const SM  = 'https://www.ahstatic.com/photos/1598_sm_00_p_1024x768.jpg'
 const RO1 = 'https://www.ahstatic.com/photos/1598_rodbc_00_p_1024x768.jpg'
 const RO2 = 'https://www.ahstatic.com/photos/1598_rodbch_00_p_1024x768.jpg'
 const RO3 = 'https://www.ahstatic.com/photos/1598_rodbaci_00_p_1024x768.jpg'
@@ -43,61 +47,84 @@ const RO4 = 'https://www.ahstatic.com/photos/1598_rodba_00_p_1024x768.jpg'
 const RO5 = 'https://www.ahstatic.com/photos/1598_rotwc_00_p_1024x768.jpg'
 const RO6 = 'https://www.ahstatic.com/photos/1598_rodbabc_00_p_1024x768.jpg'
 const RO7 = 'https://www.ahstatic.com/photos/1598_rosad_00_p_1024x768.jpg'
+const RO8 = 'https://www.ahstatic.com/photos/1598_rodbc_01_p_1024x768.jpg'
+const RO9 = 'https://www.ahstatic.com/photos/1598_rodba_01_p_1024x768.jpg'
+const SP0 = '/spa.jpg'
+const SP1 = '/thalasso.jpg'
+const SP2 = '/institut.jpeg'
+const PO0 = '/pool-overview.jpg'
+const FI0 = 'https://www.ahstatic.com/photos/1598_fi_00_p_1024x768.jpg'
+const FI1 = '/salle-fitness.jpeg'
+const FI2 = '/famille.avif'
+const FI3 = '/golf.jpeg'
+const SU0 = 'https://www.ahstatic.com/photos/2945_ho_00_p_1024x768.jpg'
+const SU1 = 'https://www.ahstatic.com/photos/2945_ho_01_p_1024x768.jpg'
+const SU2 = 'https://www.ahstatic.com/photos/2945_ho_02_p_1024x768.jpg'
+const SU3 = 'https://www.ahstatic.com/photos/2945_ho_03_p_1024x768.jpg'
+const SU4 = 'https://www.ahstatic.com/photos/2945_ho_04_p_1024x768.jpg'
+const SU5 = 'https://www.ahstatic.com/photos/2945_ho_05_p_1024x768.jpg'
+const SU6 = 'https://www.ahstatic.com/photos/2945_br_00_p_1024x768.jpg'
+const SU7 = 'https://www.ahstatic.com/photos/2945_fi_00_p_1024x768.jpg'
+const SM0 = 'https://www.ahstatic.com/photos/1598_sm_00_p_1024x768.jpg'
+const SM1 = 'https://www.ahstatic.com/photos/1598_sm_01_p_1024x768.jpg'
+const SM2 = 'https://www.ahstatic.com/photos/1598_sm_02_p_1024x768.jpg'
+const SM3 = 'https://www.ahstatic.com/photos/1598_sm_03_p_1024x768.jpg'
+const SM4 = 'https://www.ahstatic.com/photos/1598_sm_04_p_1024x768.jpg'
+const PA0 = 'https://www.ahstatic.com/photos/1598_pa_00_p_1024x768.jpg'
 
 const ELEMENTS = [
   // Hotel
   { id:  1, category: 'Hotel', name: 'Hotel overview',          published: true,  content: 72, photos: 90, quality: 88, filterKey: 'Hotel', img: HO0, photoCount: 12, showPhoto: true,  showDesc: true  },
   { id:  2, category: 'Hotel', name: 'Services',                published: true,  content: 65, photos: 72, quality: 70, filterKey: 'Hotel', img: HO1, photoCount: 8,  showPhoto: true,  showDesc: false },
-  { id:  3, category: 'Hotel', name: 'Hotel advantages',        published: true,  content: 70, photos: 80, quality: 78, filterKey: 'Hotel', img: HO2, photoCount: 6,  showPhoto: true,  showDesc: true  },
-  { id:  4, category: 'Hotel', name: 'Sustainable development', published: false, content: 30, photos: 38, quality: 40, filterKey: 'Hotel', img: HO3, photoCount: 3,  showPhoto: true,  showDesc: true  },
-  { id:  5, category: 'Hotel', name: 'Photos of your guest',    published: true,  content: 60, photos: 65, quality: 62, filterKey: 'Hotel', img: HO1, photoCount: 5,  showPhoto: true,  showDesc: false },
-  { id:  6, category: 'Hotel', name: 'Label',                   published: false, content: 40, photos: 42, quality: 45, filterKey: 'Hotel', img: HO2, photoCount: 4,  showPhoto: false, showDesc: true  },
+  { id:  3, category: 'Hotel', name: 'Hotel advantages',        published: true,  content: 70, photos: 80, quality: 78, filterKey: 'Hotel', img: HO2, photoCount: 6,  showPhoto: true,  showDesc: false },
+  { id:  4, category: 'Hotel', name: 'Sustainable development', published: false, content: 30, photos: 38, quality: 40, filterKey: 'Hotel', img: HO3, photoCount: 3,  showPhoto: true,  showDesc: false },
+  { id:  6, category: 'Hotel', name: 'Label',                   published: false, content: 40, photos: 42, quality: 45, filterKey: 'Hotel', img: '/placeholder-accor.png', photoCount: 3,  showPhoto: true,  showDesc: false },
   // Restaurant & Breakfast
-  { id:  7, category: 'Restaurant & Breakfast', name: 'Restaurant overview', published: true,  content: 75, photos: 85, quality: 82, filterKey: 'Restaurant & Breakfast', img: BR,  photoCount: 10, showPhoto: true,  showDesc: true },
-  { id:  8, category: 'Restaurant & Breakfast', name: 'Chef',                published: true,  content: 55, photos: 55, quality: 55, filterKey: 'Restaurant & Breakfast', img: BR,  photoCount: 4,  showPhoto: true,  showDesc: true },
-  { id:  9, category: 'Restaurant & Breakfast', name: 'Anecdote',            published: false, content: 45, photos: 48, quality: 48, filterKey: 'Restaurant & Breakfast', img: BR,  photoCount: 3,  showPhoto: true,  showDesc: true },
-  { id: 10, category: 'Restaurant & Breakfast', name: 'Breakfast',           published: true,  content: 80, photos: 88, quality: 85, filterKey: 'Restaurant & Breakfast', img: BR,  photoCount: 9,  showPhoto: true,  showDesc: true },
-  { id: 11, category: 'Restaurant & Breakfast', name: 'Breakfast type',      published: true,  content: 58, photos: 60, quality: 60, filterKey: 'Restaurant & Breakfast', img: BR,  photoCount: 5,  showPhoto: false, showDesc: true },
+  { id:  7, category: 'Restaurant & Breakfast', name: 'Restaurant overview', published: true,  content: 75, photos: 85, quality: 82, filterKey: 'Restaurant & Breakfast', img: BR0, photoCount: 10, showPhoto: true,  showDesc: false },
+  { id:  8, category: 'Restaurant & Breakfast', name: 'Chef',                published: true,  content: 55, photos: 55, quality: 55, filterKey: 'Restaurant & Breakfast', img: BR1, photoCount: 4,  showPhoto: true,  showDesc: false },
+  { id:  9, category: 'Restaurant & Breakfast', name: 'Anecdote',            published: false, content: 45, photos: 48, quality: 48, filterKey: 'Restaurant & Breakfast', img: BR2, photoCount: 3,  showPhoto: true,  showDesc: false },
+  { id: 10, category: 'Restaurant & Breakfast', name: 'Breakfast',           published: true,  content: 80, photos: 88, quality: 85, filterKey: 'Restaurant & Breakfast', img: BR3, photoCount: 9,  showPhoto: true,  showDesc: false },
+  { id: 11, category: 'Restaurant & Breakfast', name: 'Breakfast type',      published: true,  content: 58, photos: 60, quality: 60, filterKey: 'Restaurant & Breakfast', img: BR4, photoCount: 5,  showPhoto: true, showDesc: false },
   // Bars
-  { id: 12, category: 'Bars', name: 'Le Pondichery', published: true, content: 62, photos: 68, quality: 65, filterKey: 'Bars', img: BAB, photoCount: 6, showPhoto: true, showDesc: true },
+  { id: 12, category: 'Bars', name: 'Le Pondichery', published: true, content: 62, photos: 68, quality: 65, filterKey: 'Bars', img: BAB, photoCount: 6, showPhoto: true, showDesc: false },
   // Rooms & Accommodations
-  { id: 13, category: 'Rooms & Accommodations', name: 'Rooms overview',                                    published: true,  content: 80, photos: 88, quality: 85, filterKey: 'Rooms & Accommodations', img: RO1, photoCount: 10, showPhoto: true, showDesc: true },
-  { id: 14, category: 'Rooms & Accommodations', name: 'Chambre Classique - 2 lits simples',                published: true,  content: 68, photos: 75, quality: 72, filterKey: 'Rooms & Accommodations', img: RO1, photoCount: 7,  showPhoto: true, showDesc: true },
-  { id: 15, category: 'Rooms & Accommodations', name: 'Junior Suite Privilège - 1 canapé-lit 2 personnes', published: false, content: 48, photos: 50, quality: 45, filterKey: 'Rooms & Accommodations', img: RO7, photoCount: 4,  showPhoto: true, showDesc: true },
-  { id: 16, category: 'Rooms & Accommodations', name: 'Chambre Privilège - 1 lit double',                  published: true,  content: 64, photos: 67, quality: 65, filterKey: 'Rooms & Accommodations', img: RO4, photoCount: 6,  showPhoto: true, showDesc: true },
-  { id: 17, category: 'Rooms & Accommodations', name: 'Chambre Privilège, terrasse - 1 lit double',        published: true,  content: 68, photos: 72, quality: 70, filterKey: 'Rooms & Accommodations', img: RO2, photoCount: 7,  showPhoto: true, showDesc: true },
-  { id: 18, category: 'Rooms & Accommodations', name: 'Chambre privilège vue Tour Eiffel',                 published: true,  content: 75, photos: 80, quality: 78, filterKey: 'Rooms & Accommodations', img: RO6, photoCount: 8,  showPhoto: true, showDesc: true },
-  { id: 19, category: 'Rooms & Accommodations', name: 'Chambre standard accessible avec 1 lit double',     published: false, content: 38, photos: 42, quality: 38, filterKey: 'Rooms & Accommodations', img: RO3, photoCount: 3,  showPhoto: true, showDesc: true },
-  { id: 20, category: 'Rooms & Accommodations', name: 'Chambre standard avec 1 lit double',                published: true,  content: 65, photos: 70, quality: 68, filterKey: 'Rooms & Accommodations', img: RO5, photoCount: 6,  showPhoto: true, showDesc: true },
-  { id: 21, category: 'Rooms & Accommodations', name: 'Suite',                                             published: true,  content: 52, photos: 55, quality: 55, filterKey: 'Rooms & Accommodations', img: RO7, photoCount: 5,  showPhoto: true, showDesc: true },
+  { id: 13, category: 'Rooms & Accommodations', name: 'Rooms overview',                                    published: true,  content: 80, photos: 88, quality: 85, filterKey: 'Rooms & Accommodations', img: RO1, photoCount: 10, showPhoto: true, showDesc: true  },
+  { id: 14, category: 'Rooms & Accommodations', name: 'Chambre Classique - 2 lits simples',                published: true,  content: 68, photos: 75, quality: 72, filterKey: 'Rooms & Accommodations', img: RO2, photoCount: 7,  showPhoto: true, showDesc: false },
+  { id: 15, category: 'Rooms & Accommodations', name: 'Junior Suite Privilège - 1 canapé-lit 2 personnes', published: false, content: 48, photos: 50, quality: 45, filterKey: 'Rooms & Accommodations', img: RO3, photoCount: 4,  showPhoto: true, showDesc: false },
+  { id: 16, category: 'Rooms & Accommodations', name: 'Chambre Privilège - 1 lit double',                  published: true,  content: 64, photos: 67, quality: 65, filterKey: 'Rooms & Accommodations', img: RO4, photoCount: 6,  showPhoto: true, showDesc: false },
+  { id: 17, category: 'Rooms & Accommodations', name: 'Chambre Privilège, terrasse - 1 lit double',        published: true,  content: 68, photos: 72, quality: 70, filterKey: 'Rooms & Accommodations', img: RO5, photoCount: 7,  showPhoto: true, showDesc: false },
+  { id: 18, category: 'Rooms & Accommodations', name: 'Chambre privilège vue Tour Eiffel',                 published: true,  content: 75, photos: 80, quality: 78, filterKey: 'Rooms & Accommodations', img: RO6, photoCount: 8,  showPhoto: true, showDesc: false },
+  { id: 19, category: 'Rooms & Accommodations', name: 'Chambre standard accessible avec 1 lit double',     published: false, content: 38, photos: 42, quality: 38, filterKey: 'Rooms & Accommodations', img: RO7, photoCount: 3,  showPhoto: true, showDesc: false },
+  { id: 20, category: 'Rooms & Accommodations', name: 'Chambre standard avec 1 lit double',                published: true,  content: 65, photos: 70, quality: 68, filterKey: 'Rooms & Accommodations', img: RO8, photoCount: 6,  showPhoto: true, showDesc: false },
+  { id: 21, category: 'Rooms & Accommodations', name: 'Suite',                                             published: true,  content: 52, photos: 55, quality: 55, filterKey: 'Rooms & Accommodations', img: RO9, photoCount: 5,  showPhoto: true, showDesc: false },
   // Wellness
-  { id: 22, category: 'Wellness', name: 'Spa',      published: true,  content: 70, photos: 78, quality: 75, filterKey: 'Wellness', img: HO3, photoCount: 8, showPhoto: true, showDesc: true  },
-  { id: 23, category: 'Wellness', name: 'Thalasso', published: false, content: 30, photos: 35, quality: 32, filterKey: 'Wellness', img: HO2, photoCount: 2, showPhoto: true, showDesc: false },
-  { id: 24, category: 'Wellness', name: 'Institut', published: true,  content: 58, photos: 62, quality: 60, filterKey: 'Wellness', img: HO1, photoCount: 5, showPhoto: true, showDesc: false },
+  { id: 22, category: 'Wellness', name: 'Spa',      published: true,  content: 70, photos: 78, quality: 75, filterKey: 'Wellness', img: SP0, photoCount: 8, showPhoto: true, showDesc: false },
+  { id: 23, category: 'Wellness', name: 'Thalasso', published: false, content: 30, photos: 35, quality: 32, filterKey: 'Wellness', img: SP1, photoCount: 2, showPhoto: true, showDesc: false },
+  { id: 24, category: 'Wellness', name: 'Institut', published: true,  content: 58, photos: 62, quality: 60, filterKey: 'Wellness', img: SP2, photoCount: 5, showPhoto: true, showDesc: false },
   // Pool
-  { id: 25, category: 'Pool', name: 'Pool overview', published: true, content: 78, photos: 82, quality: 80, filterKey: 'Pool', img: HO0, photoCount: 7, showPhoto: true, showDesc: true },
+  { id: 25, category: 'Pool', name: 'Pool overview', published: true, content: 78, photos: 82, quality: 80, filterKey: 'Pool', img: PO0, photoCount: 7, showPhoto: true, showDesc: false },
   // Leisure
-  { id: 26, category: 'Leisure', name: 'Fitness overview', published: true,  content: 78, photos: 85, quality: 82, filterKey: 'Leisure', img: FI,  photoCount: 8, showPhoto: true,  showDesc: true  },
-  { id: 27, category: 'Leisure', name: 'Salle fitness',    published: true,  content: 65, photos: 72, quality: 70, filterKey: 'Leisure', img: FI,  photoCount: 6, showPhoto: false, showDesc: true  },
-  { id: 28, category: 'Leisure', name: 'Famille',          published: false, content: 42, photos: 48, quality: 45, filterKey: 'Leisure', img: HO1, photoCount: 3, showPhoto: true,  showDesc: true  },
-  { id: 29, category: 'Leisure', name: 'Golf',             published: false, content: 40, photos: 45, quality: 42, filterKey: 'Leisure', img: HO3, photoCount: 3, showPhoto: true,  showDesc: false },
+  { id: 26, category: 'Leisure', name: 'Fitness overview', published: true,  content: 78, photos: 85, quality: 82, filterKey: 'Leisure', img: FI0, photoCount: 8, showPhoto: true,  showDesc: false },
+  { id: 27, category: 'Leisure', name: 'Salle fitness',    published: true,  content: 65, photos: 72, quality: 70, filterKey: 'Leisure', img: FI1, photoCount: 6, showPhoto: true, showDesc: false },
+  { id: 28, category: 'Leisure', name: 'Famille',          published: false, content: 42, photos: 48, quality: 45, filterKey: 'Leisure', img: FI2, photoCount: 3, showPhoto: true,  showDesc: false },
+  { id: 29, category: 'Leisure', name: 'Golf',             published: false, content: 40, photos: 45, quality: 42, filterKey: 'Leisure', img: FI3, photoCount: 3, showPhoto: true,  showDesc: false },
   // Surrounding
-  { id: 30, category: 'Surrounding', name: 'Destination',                         published: true,  content: 65, photos: 70, quality: 68, filterKey: 'Surrounding', img: HO0, photoCount: 6, showPhoto: true, showDesc: true },
-  { id: 31, category: 'Surrounding', name: 'Around the hotel - Beaugrenelle',     published: true,  content: 60, photos: 65, quality: 62, filterKey: 'Surrounding', img: HO2, photoCount: 5, showPhoto: true, showDesc: true },
-  { id: 32, category: 'Surrounding', name: 'Around the hotel - Paris',            published: true,  content: 62, photos: 68, quality: 65, filterKey: 'Surrounding', img: HO1, photoCount: 5, showPhoto: true, showDesc: true },
-  { id: 33, category: 'Surrounding', name: 'Around the hotel - Galeries Lafayette', published: true,  content: 55, photos: 60, quality: 58, filterKey: 'Surrounding', img: HO3, photoCount: 4, showPhoto: true, showDesc: true },
-  { id: 34, category: 'Surrounding', name: 'Around the hotel - Dupleix',          published: true,  content: 50, photos: 55, quality: 52, filterKey: 'Surrounding', img: HO0, photoCount: 4, showPhoto: true, showDesc: true },
-  { id: 35, category: 'Surrounding', name: 'Around the hotel - CDG',              published: false, content: 25, photos: 30, quality: 28, filterKey: 'Surrounding', img: HO2, photoCount: 2, showPhoto: true, showDesc: true },
-  { id: 36, category: 'Surrounding', name: 'Around the hotel - DisneyLand Paris', published: false, content: 22, photos: 28, quality: 25, filterKey: 'Surrounding', img: HO3, photoCount: 2, showPhoto: true, showDesc: true },
-  { id: 37, category: 'Surrounding', name: 'Around the hotel - Paris Orly',       published: false, content: 28, photos: 32, quality: 30, filterKey: 'Surrounding', img: HO1, photoCount: 2, showPhoto: true, showDesc: true },
+  { id: 30, category: 'Surrounding', name: 'Destination',                          published: true,  content: 65, photos: 70, quality: 68, filterKey: 'Surrounding', img: SU0, photoCount: 6, showPhoto: true, showDesc: false },
+  { id: 31, category: 'Surrounding', name: 'Around the hotel - Beaugrenelle',      published: true,  content: 60, photos: 65, quality: 62, filterKey: 'Surrounding', img: '/placeholder-accor.png', photoCount: 2, showPhoto: true, showDesc: false },
+  { id: 32, category: 'Surrounding', name: 'Around the hotel - Paris',             published: true,  content: 62, photos: 68, quality: 65, filterKey: 'Surrounding', img: '/placeholder-accor.png', photoCount: 3, showPhoto: true, showDesc: false },
+  { id: 33, category: 'Surrounding', name: 'Around the hotel - Galeries Lafayette',published: true,  content: 55, photos: 60, quality: 58, filterKey: 'Surrounding', img: '/placeholder-accor.png', photoCount: 2, showPhoto: true, showDesc: false },
+  { id: 34, category: 'Surrounding', name: 'Around the hotel - Dupleix',           published: true,  content: 50, photos: 55, quality: 52, filterKey: 'Surrounding', img: '/placeholder-accor.png', photoCount: 2, showPhoto: true, showDesc: false },
+  { id: 35, category: 'Surrounding', name: 'Around the hotel - CDG',               published: false, content: 25, photos: 30, quality: 28, filterKey: 'Surrounding', img: '/placeholder-accor.png', photoCount: 1, showPhoto: true, showDesc: false },
+  { id: 36, category: 'Surrounding', name: 'Around the hotel - DisneyLand Paris',  published: false, content: 22, photos: 28, quality: 25, filterKey: 'Surrounding', img: '/placeholder-accor.png', photoCount: 1, showPhoto: true, showDesc: false },
+  { id: 37, category: 'Surrounding', name: 'Around the hotel - Paris Orly',        published: false, content: 28, photos: 32, quality: 30, filterKey: 'Surrounding', img: '/placeholder-accor.png', photoCount: 2, showPhoto: true, showDesc: false },
   // Meetings & Events
-  { id: 38, category: 'Meetings & Events', name: 'Overview',  published: true,  content: 80, photos: 88, quality: 85, filterKey: 'Meetings & Events', img: SM,  photoCount: 9, showPhoto: true,  showDesc: false },
-  { id: 39, category: 'Meetings & Events', name: 'Dupleix',   published: true,  content: 68, photos: 75, quality: 72, filterKey: 'Meetings & Events', img: SM,  photoCount: 6, showPhoto: true,  showDesc: true  },
-  { id: 40, category: 'Meetings & Events', name: 'Eiffel',    published: true,  content: 74, photos: 80, quality: 78, filterKey: 'Meetings & Events', img: SM,  photoCount: 7, showPhoto: true,  showDesc: true  },
-  { id: 41, category: 'Meetings & Events', name: 'Affaires',  published: false, content: 50, photos: 58, quality: 52, filterKey: 'Meetings & Events', img: SM,  photoCount: 4, showPhoto: true,  showDesc: false },
-  { id: 42, category: 'Meetings & Events', name: 'Mariages',  published: false, content: 55, photos: 62, quality: 58, filterKey: 'Meetings & Events', img: SM,  photoCount: 5, showPhoto: true,  showDesc: true  },
+  { id: 38, category: 'Meetings & Events', name: 'Overview',  published: true,  content: 80, photos: 88, quality: 85, filterKey: 'Meetings & Events', img: SM0, photoCount: 9, showPhoto: true, showDesc: false },
+  { id: 39, category: 'Meetings & Events', name: 'Dupleix',   published: true,  content: 68, photos: 75, quality: 72, filterKey: 'Meetings & Events', img: SM1, photoCount: 6, showPhoto: true, showDesc: false },
+  { id: 40, category: 'Meetings & Events', name: 'Eiffel',    published: true,  content: 74, photos: 80, quality: 78, filterKey: 'Meetings & Events', img: SM2, photoCount: 7, showPhoto: true, showDesc: false },
+  { id: 41, category: 'Meetings & Events', name: 'Affaires',  published: false, content: 50, photos: 58, quality: 52, filterKey: 'Meetings & Events', img: SM3, photoCount: 4, showPhoto: true, showDesc: false },
+  { id: 42, category: 'Meetings & Events', name: 'Mariages',  published: false, content: 55, photos: 62, quality: 58, filterKey: 'Meetings & Events', img: SM4, photoCount: 5, showPhoto: true, showDesc: false },
   // Parking
-  { id: 43, category: 'Parking', name: 'Overview', published: true, content: 82, photos: 88, quality: 85, filterKey: 'Parking', img: HO0, photoCount: 5, showPhoto: false, showDesc: true },
+  { id: 43, category: 'Parking', name: 'Overview', published: true, content: 82, photos: 88, quality: 85, filterKey: 'Parking', img: '/placeholder-accor.png', photoCount: 4, showPhoto: true, showDesc: false },
 ]
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -178,7 +205,7 @@ function StatusBadge({ published }) {
       fontSize: 12, fontWeight: 400, fontFamily: 'Roboto, sans-serif',
       whiteSpace: 'nowrap',
     }}>
-      {published ? 'Published' : 'Last modification non published'}
+      {published ? 'Published' : 'Publications in progress'}
     </span>
   )
 }
@@ -239,26 +266,40 @@ function ElementCard({ el, onDescriptionClick }) {
       {/* ── Image ── Figma: pad 16/16/0/16, r:6,6,24,0 */}
       <div style={{ padding: '16px 16px 0 16px' }}>
         <div style={{
-          backgroundImage: `url(${el.img})`,
+          backgroundImage: el.img ? `url(${el.img})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundColor: '#C4C4D4',
+          backgroundColor: el.img ? '#C4C4D4' : '#EBEBF5',
           borderRadius: '6px 6px 24px 0px',
           position: 'relative',
           overflow: 'hidden',
           aspectRatio: '4 / 3',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          gap: 8,
         }}>
-          {/* Subtle dark overlay for badge legibility */}
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: 'linear-gradient(180deg, rgba(0,0,0,0.22) 0%, transparent 40%)',
-          }} />
-
-          {/* Status badge — top-left */}
-          <div style={{ position: 'absolute', top: 12, left: 12 }}>
-            <StatusBadge published={el.published} />
-          </div>
-
+          {el.img ? (
+            <>
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.22) 0%, transparent 40%)' }} />
+              <div style={{ position: 'absolute', top: 12, left: 12 }}>
+                <StatusBadge published={el.published} />
+              </div>
+            </>
+          ) : (
+            <>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A9A8BB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
+                <line x1="2" y1="2" x2="22" y2="22" stroke="#A9A8BB" strokeWidth="1.5"/>
+              </svg>
+              <span style={{ fontSize: 12, fontWeight: 400, color: '#A9A8BB', fontFamily: 'Roboto, sans-serif' }}>No media</span>
+              <div style={{ position: 'absolute', top: 12, left: 12 }}>
+                <StatusBadge published={el.published} />
+              </div>
+            </>
+          )}
         </div>
       </div>
 
@@ -272,12 +313,12 @@ function ElementCard({ el, onDescriptionClick }) {
         </p>
       </div>
 
-      {/* ── Score columns ── fixed 3-col grid so positions never shift */}
+      {/* ── Score columns ── flex so visible columns always start from the left */}
       {(el.showDesc || el.showPhoto) && (
-        <div style={{ padding: '16px 16px 0 16px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
-          <div>{el.showDesc  && <ScoreColumn label="Content" pct={el.content} />}</div>
-          <div>{el.showPhoto && <ScoreColumn label="Photos"  pct={el.photos}  />}</div>
-          <div>{el.showPhoto && <ScoreColumn label="Quality" pct={el.quality} variant="star" />}</div>
+        <div style={{ padding: '16px 16px 0 16px', display: 'flex', gap: 16 }}>
+          {el.showDesc  && <div style={{ flex: '1 1 0' }}><ScoreColumn label="Content" pct={el.content} /></div>}
+          {el.showPhoto && <div style={{ flex: '1 1 0' }}><ScoreColumn label="Photos"  pct={el.photos}  /></div>}
+          {el.showPhoto && <div style={{ flex: '1 1 0' }}><ScoreColumn label="Quality" pct={el.quality} variant="star" /></div>}
         </div>
       )}
 
@@ -297,7 +338,7 @@ function ElementCard({ el, onDescriptionClick }) {
               onMouseEnter={e => e.currentTarget.style.background = '#f5f5fb'}
               onMouseLeave={e => e.currentTarget.style.background = 'white'}
             >
-              Details
+              Description
             </button>
           )}
           {el.showPhoto && (
@@ -366,7 +407,7 @@ export default function OverviewPage({ onDescriptionClick }) {
   const [search, setSearch] = useState('')
   const [activeCategories, setActiveCategories] = useState(['All'])
   const [activeStatuses, setActiveStatuses] = useState([])
-  const [sortBy, setSortBy] = useState('date')
+  const [sortBy, setSortBy] = useState('alpha')
 
   function toggleCategory(cat) {
     if (cat === 'All') {
@@ -395,7 +436,7 @@ export default function OverviewPage({ onDescriptionClick }) {
       activeCategories.includes(el.filterKey)
     const matchStatus = activeStatuses.length === 0 ||
       (activeStatuses.includes('Published') && el.published) ||
-      (activeStatuses.includes('Last modification non published') && !el.published)
+      (activeStatuses.includes('Publications in progress') && !el.published)
     return matchSearch && matchCat && matchStatus
   })
 
@@ -480,7 +521,6 @@ export default function OverviewPage({ onDescriptionClick }) {
                 onChange={e => setSortBy(e.target.value)}
                 style={{ appearance: 'none', border: '1px solid #DDDDE8', borderRadius: 6, padding: '6px 32px 6px 32px', fontSize: 13, color: '#374151', background: 'white', cursor: 'pointer', fontFamily: 'Inter, sans-serif', outline: 'none' }}
               >
-                <option value="date">Creation date</option>
                 <option value="alpha">A → Z</option>
                 <option value="score-desc">Score: High to Low</option>
                 <option value="score-asc">Score: Low to High</option>
