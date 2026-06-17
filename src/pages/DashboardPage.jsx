@@ -252,11 +252,10 @@ const KPIS_BY_TAB = [
         { name: 'Chef',                count: 2, imgType: 'sub',  trend: '+1.0 pts vs last month', objective: 'Ensure chef photos are professionally styled and reflect brand identity.',        insight: '1 portrait is missing — add a shot in the kitchen environment.' },
         { name: 'Anecdote',            count: 2, imgType: 'sub',  trend: '+0.0 pts vs last month', objective: 'Check that anecdote visuals are storytelling-focused and on-brand.',             insight: 'Section under-documented. Work with a food stylist to create compelling shots.' },
         { name: 'Breakfast',           count: 5, imgType: 'main', trend: '+3.1 pts vs last month', objective: 'Ensure breakfast visuals showcase variety, ambiance and quality.',                insight: '1 photo missing — a wide buffet setup shot would complete this section.' },
-        { name: 'Breakfast type',      count: 3, imgType: 'sub',  trend: '+1.0 pts vs last month', objective: 'Document each breakfast type option with clear, appetising imagery.',             insight: '1 breakfast type photo is missing. Show continental and à la carte options clearly.' },
       ],
       '+2.5 pts vs last month',
       'Ensure dining and breakfast areas are fully documented for guest decision-making.',
-      'Breakfast type visuals are incomplete. Overall completion is strong.',
+      'Overall completion is strong.',
     ),
     makePhotoKpi('Bars',
       [
@@ -356,7 +355,6 @@ const KPIS_BY_TAB = [
         { name: 'Chef',                pct: 55, trend: '+1.0 pts vs last month', objective: 'Ensure chef photos are professionally styled and reflect brand identity.',    insight: '1 portrait has a distracting background. Reshoot with a clean kitchen backdrop.' },
         { name: 'Anecdote',            pct: 48, trend: '-0.3 pts vs last month', objective: 'Check that anecdote visuals are storytelling-focused and on-brand.',           insight: 'Images lack narrative depth. Work with a food stylist to create more compelling shots.' },
         { name: 'Breakfast',           pct: 85, trend: '+3.0 pts vs last month', objective: 'Ensure breakfast photos are bright, welcoming and appetising.',               insight: '1 image taken in low light — retake during morning service for better brightness.' },
-        { name: 'Breakfast type',      pct: 60, trend: '+1.0 pts vs last month', objective: 'Verify each breakfast type is photographed with consistent styling.',         insight: '2 images have inconsistent colour grading. Apply uniform post-processing for brand coherence.' },
       ],
       '+2.0 pts vs last month',
       'Evaluate dining photography for brand alignment, food styling and lighting quality.',
@@ -809,7 +807,7 @@ const OVERALL_PCT = AV([TAB0_PCT, TAB1_PCT, TAB2_PCT])
 const TABS_META = [
   { title: 'Content completion', scoreType: 'content', tooltipPlacement: 'bottom-left',  pct: TAB0_PCT, trend: '+0.2 pts vs last month', stars: false },
   { title: 'Photo completion',   scoreType: 'media',   tooltipPlacement: 'bottom-left',  pct: TAB1_PCT, trend: '+0.2 pts vs last month', stars: false },
-  { title: 'Photo quality',      scoreType: 'quality', tooltipPlacement: 'bottom-right', pct: TAB2_PCT, trend: null, stars: true, starValue: parseFloat((TAB2_PCT / 20).toFixed(1)) },
+  { title: 'Photo quality',      scoreType: 'quality', tooltipPlacement: 'bottom-right', pct: TAB2_PCT, trend: null, stars: true, starValue: Math.round(TAB2_PCT / 20) },
 ]
 
 
@@ -913,7 +911,7 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
   const [selectedKpi, setSelectedKpi] = useState(null)
   const [expandedKpi, setExpandedKpi] = useState(null)
   const [search, setSearch]           = useState('')
-  const [sortBy, setSortBy]           = useState('alpha')
+  const [sortBy, setSortBy]           = useState('default')
   const [hoveredTab, setHoveredTab]   = useState(null)
   const [drawerOpen, setDrawerOpen]   = useState(false)
 
@@ -1119,6 +1117,7 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
                     onChange={e => setSortBy(e.target.value)}
                     style={{ appearance: 'none', border: '1px solid #DDDDE8', borderRadius: 6, padding: '6px 32px 6px 32px', fontSize: 13, color: '#374151', background: 'white', cursor: 'pointer', fontFamily: 'Inter, sans-serif', outline: 'none' }}
                   >
+                    <option value="default">Default</option>
                     <option value="alpha">A → Z</option>
                     <option value="score-desc">Score: High to Low</option>
                     <option value="score-asc">Score: Low to High</option>
@@ -1176,12 +1175,12 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
                       {kpi.empty
                         ? <span style={{ fontSize: 13, color: '#9CA3AF', flex: 1 }}>Empty</span>
                         : activeTab === 2
-                          ? <Stars value={kpi.pct / 20} size={16} />
+                          ? <Stars value={Math.round(kpi.pct / 20)} size={16} />
                           : <ScoreGauge pct={kpi.pct} />
                       }
 
                       <span style={{ fontSize: 14, fontWeight: 600, color: isSelected ? '#2D4CD5' : '#374151', minWidth: 40, textAlign: 'right' }}>
-                        {activeTab === 2 ? `${(kpi.pct / 20).toFixed(1)}` : `${kpi.pct}%`}
+                        {activeTab === 2 ? `${Math.round(kpi.pct / 20)}` : `${kpi.pct}%`}
                       </span>
 
                       {kpi.warning && (
@@ -1233,9 +1232,9 @@ export default function DashboardPage({ showOnboarding = false, onCloseOnboardin
                                     <circle cx="5" cy="5" r="3" fill={isSubSelected ? '#2D4CD5' : '#C4C4D4'} />
                                   </svg>
                                   <span style={{ fontSize: 13, color: isSubSelected ? '#2D4CD5' : '#5E5B73', fontWeight: isSubSelected ? 600 : 400, width: 353, flexShrink: 0, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{s.name}</span>
-                                  {activeTab === 2 ? <Stars value={s.pct / 20} size={16} /> : <ScoreGauge pct={s.pct} />}
+                                  {activeTab === 2 ? <Stars value={Math.round(s.pct / 20)} size={16} /> : <ScoreGauge pct={s.pct} />}
                                   <span style={{ fontSize: 13, fontWeight: 500, color: isSubSelected ? '#2D4CD5' : '#5E5B73', minWidth: 40, textAlign: 'right' }}>
-                                    {activeTab === 2 ? `${(s.pct / 20).toFixed(1)}` : `${s.pct}%`}
+                                    {activeTab === 2 ? `${Math.round(s.pct / 20)}` : `${s.pct}%`}
                                   </span>
                                 </div>
                               )

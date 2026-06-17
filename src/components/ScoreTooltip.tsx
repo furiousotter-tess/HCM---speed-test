@@ -52,13 +52,12 @@ const CONTENT: Record<ScoreType, TooltipData> = {
     description:
       'An AI model rates each photo. Final score = probability-weighted sum.',
     scale: [
-      { label: 'Excellent', pts: '10 pts' },
-      { label: 'Good', pts: '7.5 pts' },
-      { label: 'Fair', pts: '5 pts' },
-      { label: 'Poor', pts: '2.5 pts' },
-      { label: 'Bad', pts: '0 pt' },
+      { label: '1 — Terrible',  pts: '' },
+      { label: '2 — Fair',      pts: '' },
+      { label: '3 — Average',   pts: '' },
+      { label: '4 — Good',      pts: '' },
+      { label: '5 — Excellent', pts: '' },
     ],
-    note: 'Min resolution: 3,700 px',
   },
 }
 

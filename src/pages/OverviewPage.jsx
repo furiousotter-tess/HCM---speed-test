@@ -84,7 +84,6 @@ const ELEMENTS = [
   { id:  8, category: 'Restaurant & Breakfast', name: 'Chef',                published: true,  content: 55, photos: 55, quality: 55, filterKey: 'Restaurant & Breakfast', img: BR1, photoCount: 4,  showPhoto: true,  showDesc: false },
   { id:  9, category: 'Restaurant & Breakfast', name: 'Anecdote',            published: false, content: 45, photos: 48, quality: 48, filterKey: 'Restaurant & Breakfast', img: BR2, photoCount: 3,  showPhoto: true,  showDesc: false },
   { id: 10, category: 'Restaurant & Breakfast', name: 'Breakfast',           published: true,  content: 80, photos: 88, quality: 85, filterKey: 'Restaurant & Breakfast', img: BR3, photoCount: 9,  showPhoto: true,  showDesc: false },
-  { id: 11, category: 'Restaurant & Breakfast', name: 'Breakfast type',      published: true,  content: 58, photos: 60, quality: 60, filterKey: 'Restaurant & Breakfast', img: BR4, photoCount: 5,  showPhoto: true, showDesc: false },
   // Bars
   { id: 12, category: 'Bars', name: 'Le Pondichery', published: true, content: 62, photos: 68, quality: 65, filterKey: 'Bars', img: BAB, photoCount: 6, showPhoto: true, showDesc: false },
   // Rooms & Accommodations
@@ -314,7 +313,7 @@ function ElementCard({ el, onDescriptionClick }) {
       </div>
 
       {/* ── Score columns ── flex so visible columns always start from the left */}
-      {(el.showDesc || el.showPhoto) && (
+      {(el.showDesc || el.showPhoto) && !el.img.includes('placeholder') && (
         <div style={{ padding: '16px 16px 0 16px', display: 'flex', gap: 16 }}>
           {el.showDesc  && <div style={{ flex: '1 1 0' }}><ScoreColumn label="Content" pct={el.content} /></div>}
           {el.showPhoto && <div style={{ flex: '1 1 0' }}><ScoreColumn label="Photos"  pct={el.photos}  /></div>}
@@ -442,6 +441,8 @@ export default function OverviewPage({ onDescriptionClick }) {
     if (sortBy === 'content-asc') return a.content - b.content
     if (sortBy === 'photos-asc')  return a.photos  - b.photos
     if (sortBy === 'quality-asc') return a.quality  - b.quality
+    if (a.id === 1) return -1 // Hotel overview always first
+    if (b.id === 1) return 1
     return a.name.localeCompare(b.name) // alpha (default)
   })
 
